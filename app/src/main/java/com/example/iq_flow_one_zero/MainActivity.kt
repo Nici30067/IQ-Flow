@@ -21,6 +21,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             IQFlow_one_zeroTheme {
                     FlashcardApp()
+                //das hier habe nur ich hier hin geschrieben
             }
         }
     }
