@@ -4,13 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.iq_flow_one_zero.ui.FlashCardAppTopBar
 import com.example.iq_flow_one_zero.ui.theme.IQFlow_one_zeroTheme
 import com.example.iq_flow_one_zero.ui.FlashcardApp
 
@@ -21,7 +16,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             IQFlow_one_zeroTheme {
                     FlashcardApp()
-                //das hier habe nur ich hier hin geschrieben
             }
         }
     }
