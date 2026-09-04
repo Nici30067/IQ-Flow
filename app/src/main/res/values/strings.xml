@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">IQ-Flow</string>
+    <string name="button_get_answer">backside</string>
+    <string name="button_next_card">next card</string>
+    <string name="see_previous_card">previous card</string>
+    <string name="frontside_string_eins">"Wie viele Vorkomma und Nachkommastellen hat das Dualsystem Qm.n?"</string>
+    <string name="frontside_string_zwei">"Wie nennt man ein Übertragsbit auch?"</string>
+    <string name="frontside_string_drei">"Was ist das most significant bit (MSB)?"</string>
+    <string name="backside_string_eins">"m Vorkommastellen und n Nachkommastellen"</string>
+    <string name="backside_string_zwei">"Carry"</string>
+    <string name="backside_string_drei">"Das Bit mit dem höchsten Gewicht"</string>
+    <string name="tlgi_flashcardlist_name">TLGI</string>
+    <string name="englisch_flashcardlist_name">Englisch</string>
+    <string name="mathe_flashcardlist_name">Mathe</string>
+    <string name="back_button">back button</string>
+</resources>
