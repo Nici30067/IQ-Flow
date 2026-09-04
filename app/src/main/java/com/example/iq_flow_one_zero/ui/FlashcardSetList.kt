@@ -9,52 +9,99 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.automirrored.filled.ShowChart
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CenterAlignedTopAppBar
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.blur
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.iq_flow_one_zero.R
 import com.example.iq_flow_one_zero.data.mainFlashcardList
 
 @Composable
 fun FlashcardList(onFlashcardsetClicked: () -> Unit) {
 
-        Column(verticalArrangement = Arrangement.Center,
+    Column(modifier = Modifier.fillMaxSize()) {
+        Column(
+            verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxSize()) {
-            Card(elevation = CardDefaults.elevatedCardElevation(3.dp),
-                modifier = Modifier.height(500.dp)
+            modifier = Modifier.fillMaxSize()
+                .weight(1f)
+        ) {
+            Card(
+                elevation = CardDefaults.elevatedCardElevation(3.dp),
+                modifier = Modifier
+                    .height(500.dp)
                     .fillMaxWidth()
                     .padding(20.dp)
                     .clickable(enabled = true, onClick = onFlashcardsetClicked)
             ) {
-                LazyColumn(verticalArrangement = Arrangement.Top,
-                    modifier = Modifier.fillMaxSize()
-                        .padding(12.dp)) {
-                    items(mainFlashcardList){ flashcards ->
-                        Button(onClick = onFlashcardsetClicked,
-                            modifier = Modifier.fillMaxWidth()
-                                .padding(12.dp)) {
-                            Text(text = stringResource(flashcards.flashcardListName),
-                                modifier = Modifier.padding(12.dp))
+                LazyColumn(
+                    verticalArrangement = Arrangement.Top,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(12.dp)
+                ) {
+                    items(mainFlashcardList) { flashcards ->
+                        Button(
+                            onClick = onFlashcardsetClicked,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(12.dp)
+                        ) {
+                            Text(
+                                text = stringResource(flashcards.flashcardListName),
+                                modifier = Modifier.padding(12.dp)
+                            )
                         }
 
                     }
-                    
+
                 }
             }
         }
+        FlashcardNavigationBar()
+    }
+}
+
+@Composable
+fun FlashcardNavigationBar() {
+    var selectedItem by rememberSaveable { mutableIntStateOf(0) }
+    val items = listOf("Liste", "Bibliothek", "Statistik", "Profil")
+    val selectedIcons = listOf(Icons.AutoMirrored.Filled.List, Icons.Filled.Search,
+        Icons.AutoMirrored.Filled.ShowChart, Icons.Filled.Person
+    )
+
+    NavigationBar(modifier = Modifier) {
+        items.forEachIndexed { index, item ->
+            NavigationBarItem(
+                icon = {
+                    Icon(
+                         selectedIcons[index] ,
+                        contentDescription = item,
+                    )
+                },
+                label = { Text(item) },
+                selected = selectedItem == index,
+                onClick = { selectedItem = index },
+            )
+        }
+    }
 }
 
 @Preview
