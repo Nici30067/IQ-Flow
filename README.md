@@ -14,9 +14,12 @@
 -Sprachen: Englisch, Deutsch (...)  
 -Übersicht an gelernten Karten, Noch zu lernenden karten  
 -Möglichkeit zum Download eines Decks
+-der "jetzt lernen Button" muss eine süchtig machende Animation haben(bsp: Rakete die einmal um button fliegt mit weißem Punkt + dazu Vibration)
+-Nach Appinstallation ist ein Trivia Kartenset standartmäßig bei jedem drauf um interaktion zu vereinfachen
 
 
 ## APP-Logic
 -Bei Karteikarten: Vorder & Rückseite; Clozen(spaces unscharf/ausgeblendet); Multiple choice Fragen  
 -Lernalgorythmus: Spaced Learning  
-#- Karteikarten in mehreren Schritten ausgeben
+-Karteikarten in mehreren Schritten ausgeben
+-Zieldatum eingeben (= Klausurdatum)-> Empfehlung von Gelernten Karten/Tag
