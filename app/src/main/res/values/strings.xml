@@ -13,4 +13,8 @@
     <string name="englisch_flashcardlist_name">Englisch</string>
     <string name="mathe_flashcardlist_name">Mathe</string>
     <string name="back_button">back button</string>
+    <string name="app_navigation_item_1">Liste</string>
+    <string name="app_navigation_item_2">Bibliohek</string>
+    <string name="app_navigation_item_3">Statistik</string>
+    <string name="app_navigation_item_4">Account</string>
 </resources>

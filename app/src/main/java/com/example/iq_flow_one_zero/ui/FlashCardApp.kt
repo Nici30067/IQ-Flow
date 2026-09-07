@@ -29,9 +29,21 @@ import androidx.navigation.compose.rememberNavController
 import com.example.iq_flow_one_zero.R
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.List
+import androidx.compose.material.icons.automirrored.filled.ShowChart
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.BottomAppBar
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.currentBackStackEntryAsState
+import kotlin.system.measureTimeMillis
 
 
 enum class FlashCardAppScreen{
@@ -46,7 +58,10 @@ fun FlashcardApp(displayViewModel: DisplayViewModel = viewModel(),
     val canNavigateBack: Boolean = backStackEntry?.destination?.route != FlashCardAppScreen.SET_LIST.name
     Scaffold(topBar = {
         FlashCardAppTopBar(canNavigateBack = canNavigateBack,
-            navigateUp = { navController.navigateUp() }) }
+            navigateUp = { navController.navigateUp() }) },
+        bottomBar = {
+
+        }
     ){ innerPadding ->
         val displayUiState by displayViewModel.uiState.collectAsState()
         NavHost(
@@ -100,6 +115,41 @@ fun FlashCardAppTopBar(canNavigateBack: Boolean,
         }
 
     )
+}
+@Composable
+fun FlashcardNavigationBar() {
+//    BottomAppBar() {
+//        NavigationBarItem(
+//            selected = it,
+//            onClick = {},
+//            icon =
+//
+//        )
+//    }
+
+
+    var selectedItem by rememberSaveable { mutableIntStateOf(0) }
+    val items = listOf("Liste", "Bibliothek", "Statistik", "Profil")
+    val selectedIcons = listOf(Icons.AutoMirrored.Filled.List, Icons.Filled.Search,
+        Icons.AutoMirrored.Filled.ShowChart, Icons.Filled.Person
+    )
+
+
+    NavigationBar(modifier = Modifier) {
+        items.forEachIndexed { index, item ->
+            NavigationBarItem(
+                icon = {
+                    Icon(
+                        selectedIcons[index] ,
+                        contentDescription = item,
+                    )
+                },
+                label = { Text(item) },
+                selected = selectedItem == index,
+                onClick = { selectedItem = index },
+            )
+        }
+    }
 }
 
 @Preview(showBackground = false)
