@@ -49,7 +49,7 @@ fun FlashcardList(onFlashcardsetClicked: () -> Unit) {
                     .height(500.dp)
                     .fillMaxWidth()
                     .padding(20.dp)
-                    .clickable(enabled = true, onClick = onFlashcardsetClicked)
+                //                    .clickable(enabled = true, onClick = onFlashcardsetClicked)
             ) {
                 LazyColumn(
                     verticalArrangement = Arrangement.Top,
@@ -79,30 +79,7 @@ fun FlashcardList(onFlashcardsetClicked: () -> Unit) {
     }
 }
 
-@Composable
-fun FlashcardNavigationBar() {
-    var selectedItem by rememberSaveable { mutableIntStateOf(0) }
-    val items = listOf("Liste", "Bibliothek", "Statistik", "Profil")
-    val selectedIcons = listOf(Icons.AutoMirrored.Filled.List, Icons.Filled.Search,
-        Icons.AutoMirrored.Filled.ShowChart, Icons.Filled.Person
-    )
 
-    NavigationBar(modifier = Modifier) {
-        items.forEachIndexed { index, item ->
-            NavigationBarItem(
-                icon = {
-                    Icon(
-                         selectedIcons[index] ,
-                        contentDescription = item,
-                    )
-                },
-                label = { Text(item) },
-                selected = selectedItem == index,
-                onClick = { selectedItem = index },
-            )
-        }
-    }
-}
 
 @Preview
 @Composable

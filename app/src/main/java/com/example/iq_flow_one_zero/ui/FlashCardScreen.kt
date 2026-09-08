@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.OutlinedButton
@@ -50,10 +51,11 @@ fun FlashCardTest(
             backsideText = stringResource(flashcards[currentDisplayedCard].back),
             backIsVisible = backIsVisible)
 
-        Row(modifier = modifier.fillMaxSize(), verticalAlignment = Alignment.Bottom) {
+        Row(modifier = modifier.fillMaxSize()
+            .padding(20.dp), verticalAlignment = Alignment.Bottom) {
             OutlinedButton(onClick = {  }
                 , modifier = modifier.weight(0.5f)
-                    .padding(horizontal = 15.dp)
+                    .padding(end = 10.dp)
                     .size(height = 50.dp, width = 80.dp)
             ) {
                 Text(text = stringResource(R.string.see_previous_card))
@@ -63,7 +65,7 @@ fun FlashCardTest(
 //                vibrator?.vibrate(VibrationEffect.createOneShot(200, 30))
              modifier = modifier
                 .weight(0.5f)
-                .padding(horizontal = 15.dp)
+                .padding(start = 10.dp)
                 .size(height = 50.dp, width = 80.dp),
                 elevation = ButtonDefaults.elevatedButtonElevation(6.dp),
                 colors = ButtonDefaults.elevatedButtonColors(Color.White),
