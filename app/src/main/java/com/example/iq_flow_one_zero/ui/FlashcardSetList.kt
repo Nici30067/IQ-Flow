@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.dp
 import com.example.iq_flow_one_zero.data.mainFlashcardList
 
 @Composable
-fun FlashcardList(onFlashcardsetClicked: () -> Unit) {
+fun FlashcardListScreen(onFlashcardsetClicked: () -> Unit) {
 
     Column(modifier = Modifier.fillMaxSize()) {
         Column(
@@ -75,7 +75,7 @@ fun FlashcardList(onFlashcardsetClicked: () -> Unit) {
                 }
             }
         }
-        FlashcardNavigationBar()
+//        FlashcardNavigationBar()
     }
 }
 
@@ -84,5 +84,5 @@ fun FlashcardList(onFlashcardsetClicked: () -> Unit) {
 @Preview
 @Composable
 fun FlashcardListPreview(){
-    FlashcardList(onFlashcardsetClicked = {})
+    FlashcardListScreen(onFlashcardsetClicked = {})
 }

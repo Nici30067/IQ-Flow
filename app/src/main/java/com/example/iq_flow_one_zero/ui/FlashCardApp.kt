@@ -1,10 +1,13 @@
 package com.example.iq_flow_one_zero.ui
+import android.graphics.drawable.Icon
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.animation.slideIn
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
@@ -31,31 +34,65 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.automirrored.filled.ShowChart
+import androidx.compose.material.icons.filled.ListAlt
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Start
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import kotlin.system.measureTimeMillis
 
 
-enum class FlashCardAppScreen{
-    SET_LIST,
-    REVIEW
+
+enum class Destination(
+    val route: String,
+    val icon: ImageVector,
+    val label: String,
+    val contentDescription: String
+){
+    List("liste", Icons.Filled.ListAlt, label = "Liste", contentDescription = "null"),
+    Library("library", Icons.Filled.Search, label = "Library", contentDescription = "null"),
+    Statistics("statistics", Icons.Filled.Start, label = "Stats", contentDescription = "null"),
+    Personal("personal", Icons.Filled.Person, label = "Personal", contentDescription = "null")
+}
+
+enum class DetailScreens(){
+    CARD_REVIEW
+}
+@Composable
+fun StatisticsScreen(modifier: Modifier = Modifier){
+    Box(modifier = Modifier.fillMaxSize()){
+        Text(text = "Stats")
+        //
+        //STILL TODO
+        //
+    }
+}
+@Composable
+fun PersonalScreen(modifier: Modifier = Modifier){
+    Box(modifier = Modifier.fillMaxSize()){
+        Text(text = "Personal")
+        //
+        //STILL TODO
+        //
+    }
 }
 @Composable
 fun FlashcardApp(displayViewModel: DisplayViewModel = viewModel(),
                  navController: NavHostController = rememberNavController()){
 
     val backStackEntry by navController.currentBackStackEntryAsState()
-    val canNavigateBack: Boolean = backStackEntry?.destination?.route != FlashCardAppScreen.SET_LIST.name
+    val canNavigateBack: Boolean = backStackEntry?.destination?.route != Destination.List.name
     Scaffold(topBar = {
         FlashCardAppTopBar(canNavigateBack = canNavigateBack,
             navigateUp = { navController.navigateUp() }) },
@@ -63,31 +100,103 @@ fun FlashcardApp(displayViewModel: DisplayViewModel = viewModel(),
 
         }
     ){ innerPadding ->
-        val displayUiState by displayViewModel.uiState.collectAsState()
-        NavHost(
+        NavigationBar(modifier = Modifier.padding(innerPadding),
             navController = navController,
-            startDestination = FlashCardAppScreen.SET_LIST.name,
-            modifier = Modifier.padding(innerPadding)
-        ){
+            displayViewModel = displayViewModel)
+    }
+}
 
-            composable(route = FlashCardAppScreen.SET_LIST.name,
-                enterTransition = { scaleIn(animationSpec = tween(150)) },
-                exitTransition = { scaleOut(animationSpec = tween(200)) }
-            ) {
-                FlashcardList(
-                    onFlashcardsetClicked = {navController.navigate(FlashCardAppScreen.REVIEW.name)}
-                )
-            }
-            composable(route = FlashCardAppScreen.REVIEW.name) {
-                FlashCardTest(currentDisplayedCard = displayUiState.currentFlashcardId,
-                    onNextButtonClicked = { displayViewModel.updateFlashcardState() },
-                    onBackButtonClicked = {},
-                    backIsVisible = displayUiState.isBacksideShown,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentHeight())
+
+@Composable
+fun NavigationBar(displayViewModel: DisplayViewModel,
+                  navController: NavHostController,
+                  modifier: Modifier = Modifier) {
+
+    val startDestination = Destination.List
+    var selectedDestination by rememberSaveable { mutableIntStateOf(startDestination.ordinal)}
+
+    Scaffold(
+        modifier = modifier,
+        bottomBar = {
+            NavigationBar(windowInsets = NavigationBarDefaults.windowInsets) {
+                Destination.entries.forEachIndexed { index, destination ->
+                    NavigationBarItem(
+                        selected = selectedDestination == index,
+                        onClick = {
+                            navController.navigate(route = destination.route)
+                            selectedDestination = index
+                        },
+                        icon = {
+                            Icon(
+                                destination.icon,
+                                contentDescription = destination.contentDescription
+                            )
+                        },
+                        label = { Text(destination.label) }
+                    )
+                }
             }
         }
+    ) { contentPadding ->
+        AppBottomNavHost(
+            displayViewModel = displayViewModel,
+        navController = navController,
+           startDestination = startDestination,
+            modifier = Modifier.padding(contentPadding))
+    }
+}
+@Composable
+fun AppBottomNavHost(
+    displayViewModel: DisplayViewModel,
+    navController: NavHostController,
+    startDestination: Destination,
+    modifier: Modifier = Modifier
+) {
+    val displayUiState by displayViewModel.uiState.collectAsState()
+
+    NavHost(
+        navController,
+        startDestination = startDestination.route
+    ) {
+        Destination.entries.forEach { destination ->
+            composable(destination.route) {
+                when (destination) {
+                    Destination.List -> FlashcardListScreen(
+                        {navController.navigate(DetailScreens.CARD_REVIEW)}
+                    )
+                    Destination.Library -> LibraryScreen()
+                    Destination.Statistics -> StatisticsScreen()
+                    Destination.Personal -> PersonalScreen()
+                    else -> {FlashcardListScreen({})}
+                }
+            }
+        }
+        composable(route = DetailScreens.CARD_REVIEW.name) {
+            //                enterTransition = { scaleIn(animationSpec = tween(150)) },
+            FlashCardTest(currentDisplayedCard = displayUiState.currentFlashcardId,
+                onNextButtonClicked = { displayViewModel.updateFlashcardState() },
+                onBackButtonClicked = {},
+                backIsVisible = displayUiState.isBacksideShown,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .wrapContentHeight())
+        }
+    }
+}
+@Composable
+fun AppRegularNavHost(
+    displayViewModel: DisplayViewModel,
+    navController: NavHostController,
+    startDestination: Destination,
+    modifier: Modifier = Modifier
+){
+
+    NavHost(
+        navController,
+        startDestination = startDestination.route
+    ) {
+
+
     }
 }
 
@@ -116,41 +225,9 @@ fun FlashCardAppTopBar(canNavigateBack: Boolean,
 
     )
 }
-@Composable
-fun FlashcardNavigationBar() {
-//    BottomAppBar() {
-//        NavigationBarItem(
-//            selected = it,
-//            onClick = {},
-//            icon =
-//
-//        )
-//    }
 
 
-    var selectedItem by rememberSaveable { mutableIntStateOf(0) }
-    val items = listOf("Liste", "Bibliothek", "Statistik", "Profil")
-    val selectedIcons = listOf(Icons.AutoMirrored.Filled.List, Icons.Filled.Search,
-        Icons.AutoMirrored.Filled.ShowChart, Icons.Filled.Person
-    )
 
-
-    NavigationBar(modifier = Modifier) {
-        items.forEachIndexed { index, item ->
-            NavigationBarItem(
-                icon = {
-                    Icon(
-                        selectedIcons[index] ,
-                        contentDescription = item,
-                    )
-                },
-                label = { Text(item) },
-                selected = selectedItem == index,
-                onClick = { selectedItem = index },
-            )
-        }
-    }
-}
 
 @Preview(showBackground = false)
 @Composable
