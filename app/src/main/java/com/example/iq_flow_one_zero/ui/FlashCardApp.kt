@@ -93,32 +93,35 @@ fun FlashcardApp(displayViewModel: DisplayViewModel = viewModel(),
 
     val backStackEntry by navController.currentBackStackEntryAsState()
     val canNavigateBack: Boolean = backStackEntry?.destination?.route != Destination.List.name
+    val startDestination = Destination.List
     Scaffold(topBar = {
         FlashCardAppTopBar(canNavigateBack = canNavigateBack,
             navigateUp = { navController.navigateUp() }) },
         bottomBar = {
-
+            NavigationBar(modifier = Modifier,
+                startDestination = startDestination,
+                navController = navController,
+                displayViewModel = displayViewModel)
         }
     ){ innerPadding ->
-        NavigationBar(modifier = Modifier.padding(innerPadding),
+
+        NavHost(
+            displayViewModel = displayViewModel,
             navController = navController,
-            displayViewModel = displayViewModel)
+            startDestination = startDestination,
+            modifier = Modifier.padding(innerPadding))
     }
 }
 
 
 @Composable
 fun NavigationBar(displayViewModel: DisplayViewModel,
+                  startDestination: Destination,
                   navController: NavHostController,
                   modifier: Modifier = Modifier) {
-
-    val startDestination = Destination.List
     var selectedDestination by rememberSaveable { mutableIntStateOf(startDestination.ordinal)}
 
-    Scaffold(
-        modifier = modifier,
-        bottomBar = {
-            NavigationBar(windowInsets = NavigationBarDefaults.windowInsets) {
+    NavigationBar(windowInsets = NavigationBarDefaults.windowInsets) {
                 Destination.entries.forEachIndexed { index, destination ->
                     NavigationBarItem(
                         selected = selectedDestination == index,
@@ -136,17 +139,9 @@ fun NavigationBar(displayViewModel: DisplayViewModel,
                     )
                 }
             }
-        }
-    ) { contentPadding ->
-        AppBottomNavHost(
-            displayViewModel = displayViewModel,
-        navController = navController,
-           startDestination = startDestination,
-            modifier = Modifier.padding(contentPadding))
-    }
 }
 @Composable
-fun AppBottomNavHost(
+fun NavHost(
     displayViewModel: DisplayViewModel,
     navController: NavHostController,
     startDestination: Destination,
