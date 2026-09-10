@@ -60,7 +60,7 @@ enum class Destination(
     val label: String,
     val contentDescription: String
 ){
-    List("liste", Icons.Filled.ListAlt, label = "Liste", contentDescription = "null"),
+    List("liste", Icons.Filled.ListAlt, label = "List", contentDescription = "null"),
     Library("library", Icons.Filled.Search, label = "Library", contentDescription = "null"),
     Statistics("statistics", Icons.Filled.Start, label = "Stats", contentDescription = "null"),
     Personal("personal", Icons.Filled.Person, label = "Personal", contentDescription = "null")
@@ -162,12 +162,14 @@ fun AppBottomNavHost(
             composable(destination.route) {
                 when (destination) {
                     Destination.List -> FlashcardListScreen(
-                        {navController.navigate(DetailScreens.CARD_REVIEW)}
+                        {navController.navigate(DetailScreens.CARD_REVIEW.name)}
                     )
                     Destination.Library -> LibraryScreen()
                     Destination.Statistics -> StatisticsScreen()
                     Destination.Personal -> PersonalScreen()
-                    else -> {FlashcardListScreen({})}
+                    else -> {FlashcardListScreen({
+                        navController.navigate(DetailScreens.CARD_REVIEW.name)
+                    })}
                 }
             }
         }
