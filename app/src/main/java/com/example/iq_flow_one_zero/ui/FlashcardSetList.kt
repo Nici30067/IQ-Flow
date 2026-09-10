@@ -43,6 +43,7 @@ fun FlashcardListScreen(onFlashcardsetClicked: () -> Unit) {
             modifier = Modifier.fillMaxSize()
                 .weight(1f)
         ) {
+
             Card(
                 elevation = CardDefaults.elevatedCardElevation(3.dp),
                 modifier = Modifier
