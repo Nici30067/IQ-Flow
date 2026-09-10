@@ -1,5 +1,6 @@
 package com.example.iq_flow_one_zero.ui
 import android.graphics.drawable.Icon
+import androidx.compose.animation.core.animateSizeAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -46,6 +47,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -89,7 +91,7 @@ fun PersonalScreen(modifier: Modifier = Modifier){
 }
 @Composable
 fun FlashcardApp(displayViewModel: DisplayViewModel = viewModel(),
-                 navController: NavHostController = rememberNavController()){
+                 navController: NavHostController = rememberNavController(), ){
 
     val backStackEntry by navController.currentBackStackEntryAsState()
     val canNavigateBack: Boolean = backStackEntry?.destination?.route != Destination.List.name
@@ -98,10 +100,12 @@ fun FlashcardApp(displayViewModel: DisplayViewModel = viewModel(),
         FlashCardAppTopBar(canNavigateBack = canNavigateBack,
             navigateUp = { navController.navigateUp() }) },
         bottomBar = {
-            NavigationBar(modifier = Modifier,
-                startDestination = startDestination,
-                navController = navController,
-                displayViewModel = displayViewModel)
+            if (navController.currentBackStackEntry?.destination?.route != DetailScreens.CARD_REVIEW.name) {
+                NavigationBar(modifier = Modifier,
+                    startDestination = startDestination,
+                    navController = navController,
+                    displayViewModel = displayViewModel)
+            }
         }
     ){ innerPadding ->
 
@@ -109,7 +113,7 @@ fun FlashcardApp(displayViewModel: DisplayViewModel = viewModel(),
             displayViewModel = displayViewModel,
             navController = navController,
             startDestination = startDestination,
-            modifier = Modifier.padding(innerPadding))
+            modifier = modifier.padding(innerPadding))
     }
 }
 
@@ -214,4 +218,9 @@ fun FlashCardAppTopBar(canNavigateBack: Boolean,
 @Composable
 fun FlashCardPreview(){
     FlashCardTest(onNextButtonClicked = {}, onBackButtonClicked = {})
+}
+@Preview
+@Composable
+fun FlashcardAppPreview(){
+    FlashcardApp()
 }
