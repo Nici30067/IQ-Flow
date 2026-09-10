@@ -183,22 +183,6 @@ fun AppBottomNavHost(
         }
     }
 }
-@Composable
-fun AppRegularNavHost(
-    displayViewModel: DisplayViewModel,
-    navController: NavHostController,
-    startDestination: Destination,
-    modifier: Modifier = Modifier
-){
-
-    NavHost(
-        navController,
-        startDestination = startDestination.route
-    ) {
-
-
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
