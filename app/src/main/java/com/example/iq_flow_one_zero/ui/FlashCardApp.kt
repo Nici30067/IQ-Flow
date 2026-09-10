@@ -91,7 +91,9 @@ fun PersonalScreen(modifier: Modifier = Modifier){
 }
 @Composable
 fun FlashcardApp(displayViewModel: DisplayViewModel = viewModel(),
-                 navController: NavHostController = rememberNavController(), ){
+                 navController: NavHostController = rememberNavController(),
+                 modifier: Modifier = Modifier
+){
 
     val backStackEntry by navController.currentBackStackEntryAsState()
     val canNavigateBack: Boolean = backStackEntry?.destination?.route != Destination.List.name
@@ -113,7 +115,7 @@ fun FlashcardApp(displayViewModel: DisplayViewModel = viewModel(),
             displayViewModel = displayViewModel,
             navController = navController,
             startDestination = startDestination,
-            modifier = modifier.padding(innerPadding))
+            modifier = Modifier.padding(innerPadding))
     }
 }
 
