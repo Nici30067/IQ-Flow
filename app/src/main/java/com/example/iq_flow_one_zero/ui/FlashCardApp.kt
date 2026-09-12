@@ -1,12 +1,4 @@
 package com.example.iq_flow_one_zero.ui
-import android.graphics.drawable.Icon
-import androidx.compose.animation.core.animateSizeAsState
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.scaleIn
-import androidx.compose.animation.scaleOut
-import androidx.compose.animation.slideIn
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,7 +15,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -33,29 +24,22 @@ import androidx.navigation.compose.rememberNavController
 import com.example.iq_flow_one_zero.R
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.List
-import androidx.compose.material.icons.automirrored.filled.ShowChart
-import androidx.compose.material.icons.filled.ListAlt
+import androidx.compose.material.icons.automirrored.filled.ListAlt
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Start
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.iq_flow_one_zero.ui.screens.FlashCardTest
 import com.example.iq_flow_one_zero.ui.screens.FlashcardListScreen
 import com.example.iq_flow_one_zero.ui.screens.LibraryScreen
-import kotlin.system.measureTimeMillis
 
 
 
@@ -65,7 +49,7 @@ enum class Destination(
     val label: String,
     val contentDescription: String
 ){
-    List("liste", Icons.Filled.ListAlt, label = "List", contentDescription = "null"),
+    List("liste", Icons.AutoMirrored.Filled.ListAlt, label = "List", contentDescription = "null"),
     Library("library", Icons.Filled.Search, label = "Library", contentDescription = "null"),
     Statistics("statistics", Icons.Filled.Start, label = "Stats", contentDescription = "null"),
     Personal("personal", Icons.Filled.Person, label = "Personal", contentDescription = "null")
@@ -93,9 +77,9 @@ fun PersonalScreen(modifier: Modifier = Modifier){
     }
 }
 @Composable
-fun FlashcardApp(displayViewModel: DisplayViewModel = viewModel(),
-                 navController: NavHostController = rememberNavController(),
-                 modifier: Modifier = Modifier
+fun FlashcardApp(modifier: Modifier = Modifier,
+                 displayViewModel: DisplayViewModel = viewModel(),
+                 navController: NavHostController = rememberNavController()
 ){
 
     val backStackEntry by navController.currentBackStackEntryAsState()
@@ -124,7 +108,8 @@ fun FlashcardApp(displayViewModel: DisplayViewModel = viewModel(),
 
 
 @Composable
-fun NavigationBar(displayViewModel: DisplayViewModel,
+fun NavigationBar(
+    displayViewModel: DisplayViewModel,
                   startDestination: Destination,
                   navController: NavHostController,
                   modifier: Modifier = Modifier) {
