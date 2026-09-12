@@ -1,4 +1,4 @@
-package com.example.iq_flow_one_zero.ui
+package com.example.iq_flow_one_zero.ui.screens
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement

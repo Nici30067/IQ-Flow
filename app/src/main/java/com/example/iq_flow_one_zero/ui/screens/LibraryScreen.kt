@@ -1,4 +1,4 @@
-package com.example.iq_flow_one_zero.ui
+package com.example.iq_flow_one_zero.ui.screens
 
 import android.util.Log.i
 import androidx.annotation.DrawableRes
