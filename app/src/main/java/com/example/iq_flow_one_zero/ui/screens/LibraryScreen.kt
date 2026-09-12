@@ -60,10 +60,10 @@ val items =
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LibraryScreen(){
+fun LibraryScreen(contentPadding: PaddingValues = PaddingValues(0.dp)){
     Column(modifier = Modifier
         .fillMaxSize()
-        .padding(20.dp),
+        .padding(contentPadding),
         verticalArrangement = Arrangement.Center) {
 
         val state = rememberCarouselState { items.count() }

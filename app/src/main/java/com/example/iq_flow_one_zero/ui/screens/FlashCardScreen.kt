@@ -3,6 +3,7 @@ package com.example.iq_flow_one_zero.ui.screens
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
@@ -39,11 +40,13 @@ fun FlashCardTest(
     currentDisplayedCard: Int = 0,
     onNextButtonClicked: () -> Unit,
     backIsVisible: Boolean = false,
-    onBackButtonClicked: () -> Unit
+    onBackButtonClicked: () -> Unit,
+    contentPadding: PaddingValues = PaddingValues(0.dp)
 ){
     val context = LocalContext.current
 
-    Column(modifier = modifier.fillMaxSize(),
+    Column(modifier = modifier.fillMaxSize()
+        .padding(contentPadding),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center) {
         Flashcard(modifier = modifier,

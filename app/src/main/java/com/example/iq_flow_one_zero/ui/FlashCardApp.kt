@@ -1,8 +1,7 @@
 package com.example.iq_flow_one_zero.ui
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -24,70 +23,36 @@ import androidx.navigation.compose.rememberNavController
 import com.example.iq_flow_one_zero.R
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.automirrored.filled.ListAlt
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Start
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarDefaults
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.example.iq_flow_one_zero.data.Destination
+import com.example.iq_flow_one_zero.data.DetailScreens
 import com.example.iq_flow_one_zero.ui.screens.FlashCardTest
 import com.example.iq_flow_one_zero.ui.screens.FlashcardListScreen
 import com.example.iq_flow_one_zero.ui.screens.LibraryScreen
+import com.example.iq_flow_one_zero.ui.screens.StatisticsScreen
+import com.example.iq_flow_one_zero.ui.screens.PersonalScreen
 
 
-
-enum class Destination(
-    val route: String,
-    val icon: ImageVector,
-    val label: String,
-    val contentDescription: String
-){
-    List("liste", Icons.AutoMirrored.Filled.ListAlt, label = "List", contentDescription = "null"),
-    Library("library", Icons.Filled.Search, label = "Library", contentDescription = "null"),
-    Statistics("statistics", Icons.Filled.Start, label = "Stats", contentDescription = "null"),
-    Personal("personal", Icons.Filled.Person, label = "Personal", contentDescription = "null")
-}
-
-enum class DetailScreens(){
-    CARD_REVIEW
-}
-@Composable
-fun StatisticsScreen(modifier: Modifier = Modifier){
-    Box(modifier = Modifier.fillMaxSize()){
-        Text(text = "Stats")
-        //
-        //STILL TODO
-        //
-    }
-}
-@Composable
-fun PersonalScreen(modifier: Modifier = Modifier){
-    Box(modifier = Modifier.fillMaxSize()){
-        Text(text = "Personal")
-        //
-        //STILL TODO
-        //
-    }
-}
 @Composable
 fun FlashcardApp(modifier: Modifier = Modifier,
                  displayViewModel: DisplayViewModel = viewModel(),
                  navController: NavHostController = rememberNavController()
 ){
-
     val backStackEntry by navController.currentBackStackEntryAsState()
     val canNavigateBack: Boolean = backStackEntry?.destination?.route != Destination.List.name
     val startDestination = Destination.List
+
     Scaffold(topBar = {
-        FlashCardAppTopBar(canNavigateBack = canNavigateBack,
-            navigateUp = { navController.navigateUp() }) },
+        FlashCardAppTopBar( canNavigateBack = canNavigateBack,
+                            navigateUp = { navController.navigateUp() })
+                      },
         bottomBar = {
             if (navController.currentBackStackEntry?.destination?.route != DetailScreens.CARD_REVIEW.name) {
                 NavigationBar(modifier = Modifier,
@@ -95,14 +60,16 @@ fun FlashcardApp(modifier: Modifier = Modifier,
                     navController = navController,
                     displayViewModel = displayViewModel)
             }
-        }
-    ){ innerPadding ->
-
-        NavHost(
+        },
+        modifier = Modifier.fillMaxSize()
+    ){
+        NavigationHost(
             displayViewModel = displayViewModel,
             navController = navController,
             startDestination = startDestination,
-            modifier = Modifier.padding(innerPadding))
+            contentPadding = it,
+            modifier = Modifier.fillMaxSize()
+               )
     }
 }
 
@@ -135,11 +102,12 @@ fun NavigationBar(
             }
 }
 @Composable
-fun NavHost(
+fun NavigationHost(
     displayViewModel: DisplayViewModel,
     navController: NavHostController,
     startDestination: Destination,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    contentPadding: PaddingValues,
 ) {
     val displayUiState by displayViewModel.uiState.collectAsState()
 
@@ -153,12 +121,14 @@ fun NavHost(
                     Destination.List -> FlashcardListScreen(
                         {navController.navigate(DetailScreens.CARD_REVIEW.name)}
                     )
-                    Destination.Library -> LibraryScreen()
-                    Destination.Statistics -> StatisticsScreen()
-                    Destination.Personal -> PersonalScreen()
+                    Destination.Library -> LibraryScreen(contentPadding = contentPadding)
+                    Destination.Statistics -> StatisticsScreen(contentPadding = contentPadding)
+                    Destination.Personal -> PersonalScreen(contentPadding = contentPadding)
                     else -> {FlashcardListScreen({
-                        navController.navigate(DetailScreens.CARD_REVIEW.name)
-                    })}
+                                navController.navigate(DetailScreens.CARD_REVIEW.name)
+                            },
+                            contentPadding = contentPadding)
+                    }
                 }
             }
         }
@@ -168,9 +138,8 @@ fun NavHost(
                 onNextButtonClicked = { displayViewModel.updateFlashcardState() },
                 onBackButtonClicked = {},
                 backIsVisible = displayUiState.isBacksideShown,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight())
+                contentPadding = contentPadding,
+                modifier = Modifier)
         }
     }
 }
@@ -178,7 +147,9 @@ fun NavHost(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FlashCardAppTopBar(canNavigateBack: Boolean,
-                       navigateUp: () -> Unit) {
+                       navigateUp: () -> Unit,
+                       modifier: Modifier = Modifier
+) {
     CenterAlignedTopAppBar(
         title = {
             Text(
@@ -196,8 +167,8 @@ fun FlashCardAppTopBar(canNavigateBack: Boolean,
                     )
                 }
             }
-        }
-
+        },
+        modifier = modifier
     )
 }
 
