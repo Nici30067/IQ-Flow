@@ -1,4 +1,8 @@
 package com.example.iq_flow_one_zero.ui
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.scaleIn
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -30,6 +34,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.DefaultNavTransitions.enterTransition
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.iq_flow_one_zero.data.Destination
 import com.example.iq_flow_one_zero.data.DetailScreens
@@ -116,7 +121,9 @@ fun NavigationHost(
         startDestination = startDestination.route
     ) {
         Destination.entries.forEach { destination ->
-            composable(destination.route) {
+            composable(destination.route,
+                enterTransition = { EnterTransition.None},
+                exitTransition = { ExitTransition.None}) {
                 when (destination) {
                     Destination.List -> FlashcardListScreen(
                         {navController.navigate(DetailScreens.CARD_REVIEW.name)}
@@ -132,8 +139,10 @@ fun NavigationHost(
                 }
             }
         }
-        composable(route = DetailScreens.CARD_REVIEW.name) {
-            //                enterTransition = { scaleIn(animationSpec = tween(150)) },
+        composable(route = DetailScreens.CARD_REVIEW.name,
+            enterTransition = { EnterTransition.None },
+            exitTransition = { ExitTransition.None }) {
+
             FlashCardTest(currentDisplayedCard = displayUiState.currentFlashcardId,
                 onNextButtonClicked = { displayViewModel.updateFlashcardState() },
                 onBackButtonClicked = {},
@@ -142,7 +151,7 @@ fun NavigationHost(
                 modifier = Modifier)
         }
     }
-}
+}d
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

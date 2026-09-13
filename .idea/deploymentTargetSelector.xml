@@ -4,10 +4,10 @@
     <selectionStates>
       <SelectionState runConfigName="app">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2026-09-11T08:19:36.049629735Z">
+        <DropdownSelection timestamp="2026-09-13T22:31:41.048828134Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="Wireless" identifier="serviceName=adb-R5CW10MMT9H-s2v7XS" />
+              <DeviceId pluginId="LocalEmulator" identifier="path=/home/niclas/.android/avd/Reeeesize.avd" />
             </handle>
           </Target>
         </DropdownSelection>
