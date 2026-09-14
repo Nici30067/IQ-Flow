@@ -8,15 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.iq_flow_one_zero.ui.components.StatisticsCard
+import com.example.iq_flow_one_zero.ui.components.CardWithInnerPadding
 
 @Composable
-fun StatisticsScreen(modifier: Modifier = Modifier,
-                     contentPadding: PaddingValues = PaddingValues(0.dp)){
+fun StatisticsScreen(contentPadding: PaddingValues = PaddingValues(0.dp)){
     Column(modifier = Modifier.fillMaxSize()
         .padding(contentPadding)){
-        StatisticsCard(0.3f, "Statistics", modifier = Modifier)
-        StatisticsCard(0.3f, "Statistics", modifier = Modifier)
+        CardWithInnerPadding(0.3f, "Statistics", modifier = Modifier)
+        CardWithInnerPadding(0.3f, "Statistics", modifier = Modifier)
     }
 }
 
