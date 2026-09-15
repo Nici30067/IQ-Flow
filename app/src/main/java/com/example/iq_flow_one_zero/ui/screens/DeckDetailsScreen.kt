@@ -21,10 +21,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.iq_flow_one_zero.data.flashcards
+import com.example.iq_flow_one_zero.data.Flashcard
+import com.example.iq_flow_one_zero.data.tlgi_flashcards
 
 @Composable
-fun DeckDetailsScreen(){
+fun DeckDetailsScreen(flashcardsList:  List<Flashcard>,
+                      onStartLearningClicked: () -> Unit){
     Column(modifier = Modifier.fillMaxSize()
         .padding(12.dp)) {
 
@@ -33,7 +35,7 @@ fun DeckDetailsScreen(){
             .fillMaxHeight(0.3f)) {
             Box(modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.BottomCenter) {
-                Button(onClick = {},
+                Button(onClick = onStartLearningClicked,
                     Modifier.fillMaxWidth(0.9f)
                         .fillMaxHeight(0.25f)
                         .padding(bottom = 12.dp)) {
@@ -43,7 +45,7 @@ fun DeckDetailsScreen(){
         }
 
         LazyColumn(modifier = Modifier.fillMaxSize()) {
-            items(flashcards) { flashcard ->
+            items(flashcardsList) { flashcard ->
                 Card(modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 12.dp)) {
@@ -63,5 +65,6 @@ fun DeckDetailsScreen(){
 @Preview
 @Composable
 fun DeckDetailsScreenPreview(){
-    DeckDetailsScreen()
+    DeckDetailsScreen(tlgi_flashcards,
+        onStartLearningClicked = {})
 }

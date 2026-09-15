@@ -3,13 +3,7 @@
     <string name="button_get_answer">backside</string>
     <string name="button_next_card">next card</string>
     <string name="see_previous_card">previous card</string>
-    <string name="frontside_string_eins">"Wie viele Vorkomma und Nachkommastellen hat das Dualsystem Qm.n?"</string>
-    <string name="frontside_string_zwei">"Wie nennt man ein Übertragsbit auch?"</string>
-    <string name="frontside_string_drei">"Was ist das most significant bit (MSB)?"</string>
-    <string name="backside_string_eins">"m Vorkommastellen und n Nachkommastellen"</string>
-    <string name="backside_string_zwei">"Carry"</string>
-    <string name="backside_string_drei">"Das Bit mit dem höchsten Gewicht"</string>
-    <string name="tlgi_flashcardlist_name">TLGI</string>
+    <string name="tlgi_flashcardlist_name">TLGIIIIIIIIIII</string>
     <string name="englisch_flashcardlist_name">Englisch</string>
     <string name="mathe_flashcardlist_name">Mathe</string>
     <string name="back_button">back button</string>
@@ -17,4 +11,25 @@
     <string name="app_navigation_item_2">Bibliohek</string>
     <string name="app_navigation_item_3">Statistik</string>
     <string name="app_navigation_item_4">Account</string>
+
+    <string name="frontside_string_eins">"Wie viele Vorkomma und Nachkommastellen hat das Dualsystem Qm.n?"</string>
+    <string name="frontside_string_zwei">"Wie nennt man ein Übertragsbit auch?"</string>
+    <string name="frontside_string_drei">"Was ist das most significant bit (MSB)?"</string>
+    <string name="backside_string_eins">"m Vorkommastellen und n Nachkommastellen"</string>
+    <string name="backside_string_zwei">"Carry"</string>
+    <string name="backside_string_drei">"Das Bit mit dem höchsten Gewicht"</string>
+
+    <string name="mathe_frontside_string_eins">"Was ist 1 + 2"</string>
+    <string name="mathe_frontside_string_zwei">"Schwierige aufgabe, aber das ergebnis ist 3"</string>
+    <string name="mathe_frontside_string_drei">"Nenne die PQ Formel"</string>
+    <string name="mathe_backside_string_eins">"Minus p halbe plus minus wurzel p halbe quadrat minus q"</string>
+    <string name="mathe_backside_string_zwei">"Was sind exponentioalfunktionen?"</string>
+    <string name="mathe_backside_string_drei">"Funktionen, die sich exponentiell schnell erhöhen"</string>
+
+    <string name="englisch_frontside_string_eins">"Wie nennt man tragen auf englisch"</string>
+    <string name="englisch_frontside_string_zwei">"carry(ing)"</string>
+    <string name="englisch_frontside_string_drei">"Wie nennt man betrügen auf englisch"</string>
+    <string name="englisch_backside_string_eins">"betray"</string>
+    <string name="englisch_backside_string_zwei">"Was ist der plural von information"</string>
+    <string name="englisch_backside_string_drei">"(multiple) information"</string>
 </resources>

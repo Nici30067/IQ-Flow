@@ -19,6 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.iq_flow_one_zero.data.Flashcard
 import com.example.iq_flow_one_zero.data.mainFlashcardList
 
 @Composable
@@ -41,7 +42,6 @@ fun FlashcardListScreen(onFlashcardsetClicked: () -> Unit,
                     .height(500.dp)
                     .fillMaxWidth()
                     .padding(20.dp)
-                //                    .clickable(enabled = true, onClick = onFlashcardsetClicked)
             ) {
                 LazyColumn(
                     verticalArrangement = Arrangement.Top,
@@ -49,7 +49,7 @@ fun FlashcardListScreen(onFlashcardsetClicked: () -> Unit,
                         .fillMaxSize()
                         .padding(12.dp)
                 ) {
-                    items(mainFlashcardList) { flashcards ->
+                    items(mainFlashcardList) { flashcardSets ->
                         Button(
                             onClick = onFlashcardsetClicked,
                             modifier = Modifier
@@ -57,7 +57,7 @@ fun FlashcardListScreen(onFlashcardsetClicked: () -> Unit,
                                 .padding(12.dp)
                         ) {
                             Text(
-                                text = stringResource(flashcards.flashcardListName),
+                                text = stringResource(flashcardSets.flashcardListName),
                                 modifier = Modifier.padding(12.dp)
                             )
                         }

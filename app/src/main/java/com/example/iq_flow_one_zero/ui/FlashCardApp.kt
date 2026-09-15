@@ -38,6 +38,8 @@ import androidx.navigation.compose.DefaultNavTransitions.enterTransition
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.iq_flow_one_zero.data.Destination
 import com.example.iq_flow_one_zero.data.DetailScreens
+import com.example.iq_flow_one_zero.data.tlgi_flashcards
+import com.example.iq_flow_one_zero.ui.screens.DeckDetailsScreen
 import com.example.iq_flow_one_zero.ui.screens.FlashCardTest
 import com.example.iq_flow_one_zero.ui.screens.FlashcardListScreen
 import com.example.iq_flow_one_zero.ui.screens.LibraryScreen
@@ -126,18 +128,24 @@ fun NavigationHost(
                 exitTransition = { ExitTransition.None}) {
                 when (destination) {
                     Destination.List -> FlashcardListScreen(
-                        {navController.navigate(DetailScreens.CARD_REVIEW.name)}
+                    onFlashcardsetClicked =     {
+                        navController.navigate(DetailScreens.DECK_DETAILS.name)
+//                        displayViewModel.updateCurrentlyLearningFlashcards(it)
+                    }
                     )
                     Destination.Library -> LibraryScreen(contentPadding = contentPadding)
                     Destination.Statistics -> StatisticsScreen(contentPadding = contentPadding)
                     Destination.Personal -> PersonalScreen(contentPadding = contentPadding)
-                    else -> {FlashcardListScreen({
-                                navController.navigate(DetailScreens.CARD_REVIEW.name)
-                            },
-                            contentPadding = contentPadding)
-                    }
                 }
             }
+        }
+        composable(route = DetailScreens.DECK_DETAILS.name) {
+            DeckDetailsScreen(
+                onStartLearningClicked = {
+                    navController.navigate(DetailScreens.CARD_REVIEW.name)
+                },
+                flashcardsList = displayUiState.nameOfCurrentlyLearningFlashcardSet
+            )
         }
         composable(route = DetailScreens.CARD_REVIEW.name,
             enterTransition = { EnterTransition.None },
@@ -148,6 +156,7 @@ fun NavigationHost(
                 onBackButtonClicked = {},
                 backIsVisible = displayUiState.isBacksideShown,
                 contentPadding = contentPadding,
+                flashcardSet = displayUiState.nameOfCurrentlyLearningFlashcardSet,
                 modifier = Modifier)
         }
     }
@@ -187,7 +196,10 @@ fun FlashCardAppTopBar(canNavigateBack: Boolean,
 @Preview(showBackground = false)
 @Composable
 fun FlashCardPreview(){
-    FlashCardTest(onNextButtonClicked = {}, onBackButtonClicked = {})
+    FlashCardTest(onNextButtonClicked = {},
+        onBackButtonClicked = {},
+        flashcardSet = tlgi_flashcards
+    )
 }
 @Preview
 @Composable

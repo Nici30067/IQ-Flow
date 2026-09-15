@@ -1,7 +1,8 @@
 package com.example.iq_flow_one_zero.ui
 
 import androidx.lifecycle.ViewModel
-import com.example.iq_flow_one_zero.data.flashcards
+import com.example.iq_flow_one_zero.data.Flashcard
+import com.example.iq_flow_one_zero.data.FlashcardSet
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -12,6 +13,13 @@ class DisplayViewModel: ViewModel() {
     val uiState: StateFlow<DisplayUiState> = _uiState.asStateFlow()
 
 
+    fun updateCurrentlyLearningFlashcards(flashcardSet: List<Flashcard>){
+        _uiState.update { currentState ->
+            currentState.copy(
+                nameOfCurrentlyLearningFlashcardSet = flashcardSet
+            )
+        }
+    }
     fun updateFlashcardState(){
         if(uiState.value.isBacksideShown){
             hideBackside()
@@ -22,7 +30,7 @@ class DisplayViewModel: ViewModel() {
     }
 
    private fun pickRandomFlashcard() {
-        val lastFlashcardsetIndex = flashcards.size - 1
+        val lastFlashcardsetIndex = uiState.value.nameOfCurrentlyLearningFlashcardSet.size - 1
         var newFlashcardId: Int = (0..lastFlashcardsetIndex).random()
         while (newFlashcardId == uiState.value.currentFlashcardId){
             newFlashcardId = (0..lastFlashcardsetIndex).random()

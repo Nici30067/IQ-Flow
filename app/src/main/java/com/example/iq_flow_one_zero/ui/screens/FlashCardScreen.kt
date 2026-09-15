@@ -31,7 +31,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.iq_flow_one_zero.R
-import com.example.iq_flow_one_zero.data.flashcards
+import com.example.iq_flow_one_zero.data.Flashcard
+import com.example.iq_flow_one_zero.data.tlgi_flashcards
 
 
 @Composable
@@ -41,6 +42,7 @@ fun FlashCardTest(
     onNextButtonClicked: () -> Unit,
     backIsVisible: Boolean = false,
     onBackButtonClicked: () -> Unit,
+    flashcardSet: List<Flashcard>,
     contentPadding: PaddingValues = PaddingValues(0.dp)
 ){
     val context = LocalContext.current
@@ -50,8 +52,8 @@ fun FlashCardTest(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center) {
         Flashcard(modifier = modifier,
-            frontsideText = stringResource(flashcards[currentDisplayedCard].front),
-            backsideText = stringResource(flashcards[currentDisplayedCard].back),
+            frontsideText = stringResource(flashcardSet[currentDisplayedCard].front),
+            backsideText = stringResource(flashcardSet[currentDisplayedCard].back),
             backIsVisible = backIsVisible)
 
         Row(modifier = modifier.fillMaxSize()
@@ -127,5 +129,8 @@ fun Flashcard(modifier: Modifier = Modifier,
 @Preview(showBackground = true)
 @Composable
 fun FlashCardScreenPreview(){
-    FlashCardTest(onNextButtonClicked = {}, onBackButtonClicked = {})
+    FlashCardTest(onNextButtonClicked = {},
+        onBackButtonClicked = {},
+        flashcardSet = tlgi_flashcards
+    )
 }
