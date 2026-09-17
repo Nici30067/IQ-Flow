@@ -2,6 +2,7 @@ package com.example.iq_flow_one_zero.ui.screens
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -24,10 +25,12 @@ import com.example.iq_flow_one_zero.data.tlgi_flashcards
 
 @Composable
 fun DeckDetailsScreen(
+    contentPadding: PaddingValues = PaddingValues(0.dp),
     flashcardsList: List<Flashcard>,
     onStartLearningClicked: () -> Unit,
 ){
     Column(modifier = Modifier.fillMaxSize()
+        .padding(contentPadding)
         .padding(12.dp)) {
 
         Card(modifier = Modifier.align(Alignment.End)
@@ -66,7 +69,7 @@ fun DeckDetailsScreen(
 @Composable
 fun DeckDetailsScreenPreview(){
     DeckDetailsScreen(
-        tlgi_flashcards,
+        flashcardsList = tlgi_flashcards,
         onStartLearningClicked = {},
     )
 }

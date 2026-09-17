@@ -58,12 +58,15 @@ fun NavigationHost(
                 onStartLearningClicked = {
                     navController.navigate(DetailScreens.CARD_REVIEW.name)
                 },
-                flashcardsList = displayUiState.nameOfCurrentlyLearningFlashcardSet
-            )
+                flashcardsList = displayUiState.nameOfCurrentlyLearningFlashcardSet,
+                contentPadding = contentPadding
+
+                )
         }
         composable(route = DetailScreens.CARD_REVIEW.name,
-            enterTransition = { EnterTransition.None },
-            exitTransition = { ExitTransition.None }) {
+//            enterTransition = { EnterTransition.None },
+//            exitTransition = { ExitTransition.None }
+        ){
 
             FlashCardTest(currentDisplayedCard = displayUiState.currentFlashcardId,
                 onNextButtonClicked = { displayViewModel.updateFlashcardState() },
