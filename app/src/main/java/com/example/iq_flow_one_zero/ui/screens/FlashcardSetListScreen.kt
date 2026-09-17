@@ -21,18 +21,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.iq_flow_one_zero.data.Flashcard
 import com.example.iq_flow_one_zero.data.mainFlashcardList
+import com.example.iq_flow_one_zero.ui.DisplayUiState
+import com.example.iq_flow_one_zero.ui.DisplayViewModel
 
 @Composable
-fun FlashcardListScreen(onFlashcardsetClicked: () -> Unit,
+fun FlashcardListScreen(onFlashcardsetClicked: (List<Flashcard>) -> Unit,
                         contentPadding: PaddingValues = PaddingValues(0.dp)
                         ) {
 
-    Column(modifier = Modifier.fillMaxSize()
+    Column(modifier = Modifier
+        .fillMaxSize()
         .padding(contentPadding)) {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier
+                .fillMaxSize()
                 .weight(1f)
         ) {
 
@@ -51,7 +55,7 @@ fun FlashcardListScreen(onFlashcardsetClicked: () -> Unit,
                 ) {
                     items(mainFlashcardList) { flashcardSets ->
                         Button(
-                            onClick = onFlashcardsetClicked,
+                            onClick = { onFlashcardsetClicked(flashcardSets.flashcardList) },
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(12.dp)
@@ -73,8 +77,9 @@ fun FlashcardListScreen(onFlashcardsetClicked: () -> Unit,
 
 
 
-@Preview
-@Composable
-fun FlashcardListPreview(){
-    FlashcardListScreen(onFlashcardsetClicked = {})
-}
+//@Preview
+//@Composable
+//fun FlashcardListPreview(){
+//    FlashcardListScreen(onFlashcardsetClicked = {},
+//        displayViewModel = )
+//}
