@@ -8,8 +8,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.example.iq_flow_one_zero.data.FlashcardSet
 import com.example.iq_flow_one_zero.data.mainFlashcardList
 import com.example.iq_flow_one_zero.data.tlgi_flashcards
@@ -37,44 +39,56 @@ fun NavigationHost(
         startDestination = startDestination.route
     ) {
         Destination.entries.forEach { destination ->
-            composable(destination.route
+            composable(
+                destination.route
 //                enterTransition = { EnterTransition.None},
 //                exitTransition = { ExitTransition.None}
-            ){
+            ) {
                 when (destination) {
                     Destination.List -> FlashcardListScreen(
-                        onFlashcardsetClicked =     {
-                            navController.navigate(DetailScreens.DECK_DETAILS.name)
-                            displayViewModel.updateCurrentlyLearningFlashcards(it)
+                        flashcardSets = mainFlashcardList,
+                        onFlashcardsetClicked = { flashcardSetNameAsString ->
+                            navController.navigate("${DetailScreens.DECK_DETAILS.name}/$flashcardSetNameAsString")
+//                            displayViewModel.updateCurrentlyLearningFlashcards(it)
                         })
+
                     Destination.Library -> LibraryScreen(contentPadding = contentPadding)
                     Destination.Statistics -> StatisticsScreen(contentPadding = contentPadding)
                     Destination.Personal -> PersonalScreen(contentPadding = contentPadding)
                 }
             }
         }
-        composable(route = DetailScreens.DECK_DETAILS.name) {
+        val flashcardNameArgument = "flashcardSetName"
+        composable(
+            route = DetailScreens.DECK_DETAILS.name + "/{$flashcardNameArgument}",
+            arguments = listOf(navArgument(flashcardNameArgument) { type = NavType.StringType })
+        ) { backStackEntry ->
+            val flashcardSetName = backStackEntry.arguments?.getString(flashcardNameArgument)?: error("kann nicht null sein")
             DeckDetailsScreen(
+                flashcardSetName = flashcardSetName,
                 onStartLearningClicked = {
                     navController.navigate(DetailScreens.CARD_REVIEW.name)
                 },
                 flashcardsList = displayUiState.nameOfCurrentlyLearningFlashcardSet,
                 contentPadding = contentPadding
 
-                )
+            )
         }
-        composable(route = DetailScreens.CARD_REVIEW.name,
+        composable(
+            route = DetailScreens.CARD_REVIEW.name,
 //            enterTransition = { EnterTransition.None },
 //            exitTransition = { ExitTransition.None }
-        ){
+        ) {
 
-            FlashCardTest(currentDisplayedCard = displayUiState.currentFlashcardId,
+            FlashCardTest(
+                currentDisplayedCard = displayUiState.currentFlashcardId,
                 onNextButtonClicked = { displayViewModel.updateFlashcardState() },
                 onBackButtonClicked = {},
                 backIsVisible = displayUiState.isBacksideShown,
                 contentPadding = contentPadding,
                 flashcardSet = displayUiState.nameOfCurrentlyLearningFlashcardSet,
-                modifier = Modifier)
+                modifier = Modifier
+            )
         }
     }
 }

@@ -17,21 +17,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.iq_flow_one_zero.data.Flashcard
-import com.example.iq_flow_one_zero.data.mainFlashcardList
-import com.example.iq_flow_one_zero.ui.DisplayUiState
-import com.example.iq_flow_one_zero.ui.DisplayViewModel
+import com.example.iq_flow_one_zero.data.FlashcardSet
 
 @Composable
-fun FlashcardListScreen(onFlashcardsetClicked: (List<Flashcard>) -> Unit,
-                        contentPadding: PaddingValues = PaddingValues(0.dp)
-                        ) {
+fun FlashcardListScreen(
+    flashcardSets: List<FlashcardSet>,
+    onFlashcardsetClicked: (Int) -> Unit,
+    contentPadding: PaddingValues = PaddingValues(0.dp)
+) {
 
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .padding(contentPadding)) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(contentPadding)
+    ) {
         Column(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -53,28 +53,37 @@ fun FlashcardListScreen(onFlashcardsetClicked: (List<Flashcard>) -> Unit,
                         .fillMaxSize()
                         .padding(12.dp)
                 ) {
-                    items(mainFlashcardList) { flashcardSets ->
-                        Button(
-                            onClick = { onFlashcardsetClicked(flashcardSets.flashcardList) },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(12.dp)
-                        ) {
-                            Text(
-                                text = stringResource(flashcardSets.flashcardListName),
-                                modifier = Modifier.padding(12.dp)
-                            )
-                        }
-
+                    items(flashcardSets) { flashcardSet ->
+                        FlashcardSetButton(
+                            onFlashcardsetClicked = onFlashcardsetClicked,
+                            flashcardSet = flashcardSet
+                        )
                     }
 
                 }
+
             }
         }
-//        FlashcardNavigationBar()
     }
 }
 
+@Composable
+fun FlashcardSetButton(
+    onFlashcardsetClicked: (Int) -> Unit,
+    flashcardSet: FlashcardSet
+) {
+    Button(
+        onClick = { onFlashcardsetClicked(flashcardSet.flashcardListName) },
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(12.dp)
+    ) {
+        Text(
+            text = stringResource(flashcardSet.flashcardListName),
+            modifier = Modifier.padding(12.dp)
+        )
+    }
+}
 
 
 //@Preview

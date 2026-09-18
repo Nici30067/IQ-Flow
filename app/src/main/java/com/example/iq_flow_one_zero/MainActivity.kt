@@ -16,6 +16,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             IQFlow_one_zeroTheme {
                     FlashcardApp()
+                //strg + alt + l for proper indentation
             }
         }
     }

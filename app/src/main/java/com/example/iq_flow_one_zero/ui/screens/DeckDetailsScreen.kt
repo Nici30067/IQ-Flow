@@ -25,6 +25,7 @@ import com.example.iq_flow_one_zero.data.tlgi_flashcards
 
 @Composable
 fun DeckDetailsScreen(
+    flashcardSetName: String,
     contentPadding: PaddingValues = PaddingValues(0.dp),
     flashcardsList: List<Flashcard>,
     onStartLearningClicked: () -> Unit,
@@ -42,7 +43,7 @@ fun DeckDetailsScreen(
                     Modifier.fillMaxWidth(0.9f)
                         .fillMaxHeight(0.25f)
                         .padding(bottom = 12.dp)) {
-                    Text(text = "Start Learning")
+                    Text(text = "Start Learning $flashcardSetName")
                 }
             }
         }
@@ -71,5 +72,6 @@ fun DeckDetailsScreenPreview(){
     DeckDetailsScreen(
         flashcardsList = tlgi_flashcards,
         onStartLearningClicked = {},
+        flashcardSetName = ""
     )
 }
