@@ -27,5 +27,6 @@ enum class Destination(
 
 enum class DetailScreens(){
     DECK_DETAILS,
-    CARD_REVIEW
+    CARD_REVIEW,
+    ADD_CARDS
 }

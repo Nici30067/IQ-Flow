@@ -34,6 +34,6 @@ val englisch_flashcards = listOf<Flashcard>(
 
 val mainFlashcardList = listOf<FlashcardSet>(
     FlashcardSet(flashcardListName = R.string.tlgi_flashcardlist_name, flashcardList = tlgi_flashcards),
-    FlashcardSet(flashcardListName = R.string.mathe_flashcardlist_name, flashcardList = mathe_flashcards),
-    FlashcardSet(flashcardListName = R.string.englisch_flashcardlist_name, flashcardList = englisch_flashcards),
+//    FlashcardSet(flashcardListName = R.string.mathe_flashcardlist_name, flashcardList = mathe_flashcards),
+//    FlashcardSet(flashcardListName = R.string.englisch_flashcardlist_name, flashcardList = englisch_flashcards),
 )

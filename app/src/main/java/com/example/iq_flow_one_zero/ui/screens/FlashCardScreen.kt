@@ -22,6 +22,10 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -47,14 +51,13 @@ import com.spartapps.swipeablecards.ui.lazy.LazySwipeableCards
 @Composable
 fun FlashCardTest(
     modifier: Modifier = Modifier,
-    currentDisplayedCard: Int = 0,
 //    onSeeBacksideClicked: () -> Unit,
     backIsVisible: Boolean = false,
     onBackButtonClicked: () -> Unit,
     flashcardSet: List<Flashcard>,
     contentPadding: PaddingValues = PaddingValues(0.dp),
 ){
-    val context = LocalContext.current
+//    val context = LocalContext.current        for vibrations
     val state = rememberSwipeableCardsState(itemCount = { flashcardSet.size })
 
     Column(modifier = modifier
@@ -72,11 +75,12 @@ fun FlashCardTest(
             }
         ) {
             items(flashcardSet){item, index, offset ->
+                var backsideIsVVVisible by remember { mutableStateOf(false) }
                 Flashcard(modifier = modifier,
             frontsideText = stringResource(item.front),
             backsideText = stringResource(item.back),
-            backIsVisible = item.backsideIsVisible,
-                    onSeeBacksideClicked = {item.backsideIsVisible = true})
+            backIsVisible = backsideIsVVVisible,
+                    onSeeBacksideClicked = {backsideIsVVVisible = true})
 
             }
         }
@@ -139,7 +143,7 @@ fun Flashcard(modifier: Modifier = Modifier,
 //        .shadow(20.dp, RoundedCornerShape(40.dp), spotColor = Color.Blue)
         ,horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center) {
-        Card(modifier = modifier
+        Card(modifier = modifier        //using a card as the column is somehow invisible and shows other cards at stack behind
             .fillMaxSize()
             .clickable(
                 enabled = !backIsVisible,
@@ -151,7 +155,9 @@ fun Flashcard(modifier: Modifier = Modifier,
                 textAlign = TextAlign.Center,
                 fontSize = 20.sp,
                 modifier = Modifier.padding(20.dp))
-            HorizontalDivider(modifier = Modifier.fillMaxWidth(0.9f), thickness = 2.dp, color = Color.DarkGray)
+            HorizontalDivider(modifier = Modifier.fillMaxWidth(0.9f)
+                .align(Alignment.CenterHorizontally)
+                , thickness = 2.dp, color = Color.DarkGray)
             Text(text = backsideText,
                 textAlign = TextAlign.Center,
                 fontSize = 20.sp,

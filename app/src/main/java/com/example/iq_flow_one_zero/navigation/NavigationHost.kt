@@ -22,6 +22,7 @@ import com.example.iq_flow_one_zero.ui.screens.FlashcardListScreen
 import com.example.iq_flow_one_zero.ui.screens.LibraryScreen
 import com.example.iq_flow_one_zero.ui.screens.PersonalScreen
 import com.example.iq_flow_one_zero.ui.screens.StatisticsScreen
+import com.example.iq_flow_one_zero.ui.screens.secondaryScreens.FlashcardAddScreen
 
 @Composable
 fun NavigationHost(
@@ -69,10 +70,14 @@ fun NavigationHost(
                 onStartLearningClicked = {
                     navController.navigate(DetailScreens.CARD_REVIEW.name)
                 },
+                onAddNewCardsClicked = {navController.navigate(DetailScreens.ADD_CARDS.name)},
                 flashcardsList = displayUiState.nameOfCurrentlyLearningFlashcardSet,
                 contentPadding = contentPadding
 
             )
+        }
+        composable(route = DetailScreens.ADD_CARDS.name) {
+            FlashcardAddScreen(onAddNewCardsClicked = {  })
         }
         composable(
             route = DetailScreens.CARD_REVIEW.name,
@@ -81,7 +86,7 @@ fun NavigationHost(
         ) {
 
             FlashCardTest(
-                currentDisplayedCard = displayUiState.currentFlashcardId,
+//                currentDisplayedCard = displayUiState.currentFlashcardId,
 //                onSeeBacksideClicked = { displayViewModel.updateFlashcardState() },
                 onBackButtonClicked = {},
                 backIsVisible = displayUiState.isBacksideShown,
