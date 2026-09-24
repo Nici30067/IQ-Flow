@@ -41,25 +41,25 @@ class DisplayViewModel: ViewModel() {
     fun updateFlashcardState(){
         if(uiState.value.isBacksideShown){
             hideBackside()
-            pickRandomFlashcard()
+//            pickRandomFlashcard()
         }else{
             showBackside()
         }
     }
 
-   private fun pickRandomFlashcard() {
-        val lastFlashcardsetIndex = uiState.value.nameOfCurrentlyLearningFlashcardSet.size - 1
-        var newFlashcardId: Int = (0..lastFlashcardsetIndex).random()
-        while (newFlashcardId == uiState.value.currentFlashcardId){
-            newFlashcardId = (0..lastFlashcardsetIndex).random()
-        }
-        _uiState.update { currentState ->
-            currentState.copy(
-                currentFlashcardId = newFlashcardId
-            )
-
-        }
-    }
+//   private fun pickRandomFlashcard() {
+//        val lastFlashcardsetIndex = uiState.value.nameOfCurrentlyLearningFlashcardSet.size - 1
+//        var newFlashcardId: Int = (0..lastFlashcardsetIndex).random()
+//        while (newFlashcardId == uiState.value.currentFlashcardId){
+//            newFlashcardId = (0..lastFlashcardsetIndex).random()
+//        }
+//        _uiState.update { currentState ->
+//            currentState.copy(
+//                currentFlashcardId = newFlashcardId
+//            )
+//
+//        }
+//    }
     private fun hideBackside(){
         _uiState.update { currentState ->
             currentState.copy(isBacksideShown = false)

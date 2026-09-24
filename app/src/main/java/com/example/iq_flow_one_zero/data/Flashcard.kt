@@ -6,7 +6,8 @@ import com.example.iq_flow_one_zero.R
 
 data class Flashcard(
     @StringRes val front: Int,
-    @StringRes val back: Int
+    @StringRes val back: Int,
+    var backsideIsVisible: Boolean = false
 )
 data class FlashcardSet(
      val flashcardListName: Int,

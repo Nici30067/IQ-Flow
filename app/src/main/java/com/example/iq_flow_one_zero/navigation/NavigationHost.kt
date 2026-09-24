@@ -82,7 +82,7 @@ fun NavigationHost(
 
             FlashCardTest(
                 currentDisplayedCard = displayUiState.currentFlashcardId,
-                onNextButtonClicked = { displayViewModel.updateFlashcardState() },
+//                onSeeBacksideClicked = { displayViewModel.updateFlashcardState() },
                 onBackButtonClicked = {},
                 backIsVisible = displayUiState.isBacksideShown,
                 contentPadding = contentPadding,

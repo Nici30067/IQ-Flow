@@ -1,6 +1,9 @@
 package com.example.iq_flow_one_zero.ui.screens
 
+import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -10,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -33,104 +37,141 @@ import androidx.compose.ui.unit.sp
 import com.example.iq_flow_one_zero.R
 import com.example.iq_flow_one_zero.data.Flashcard
 import com.example.iq_flow_one_zero.data.tlgi_flashcards
+import com.spartapps.swipeablecards.ui.SwipeableCardDirection
+import com.spartapps.swipeablecards.ui.lazy.items
+
+import com.spartapps.swipeablecards.state.rememberSwipeableCardsState
+import com.spartapps.swipeablecards.ui.lazy.LazySwipeableCards
 
 
 @Composable
 fun FlashCardTest(
     modifier: Modifier = Modifier,
     currentDisplayedCard: Int = 0,
-    onNextButtonClicked: () -> Unit,
+//    onSeeBacksideClicked: () -> Unit,
     backIsVisible: Boolean = false,
     onBackButtonClicked: () -> Unit,
     flashcardSet: List<Flashcard>,
-    contentPadding: PaddingValues = PaddingValues(0.dp)
+    contentPadding: PaddingValues = PaddingValues(0.dp),
 ){
     val context = LocalContext.current
+    val state = rememberSwipeableCardsState(itemCount = { flashcardSet.size })
 
-    Column(modifier = modifier.fillMaxSize()
+    Column(modifier = modifier
+        .fillMaxSize()
         .padding(contentPadding),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center) {
-        Flashcard(modifier = modifier,
-            frontsideText = stringResource(flashcardSet[currentDisplayedCard].front),
-            backsideText = stringResource(flashcardSet[currentDisplayedCard].back),
-            backIsVisible = backIsVisible)
-
-        Row(modifier = modifier.fillMaxSize()
-            .padding(20.dp), verticalAlignment = Alignment.Bottom) {
-            OutlinedButton(onClick = {  }
-                , modifier = modifier.weight(0.5f)
-                    .padding(end = 10.dp)
-                    .size(height = 50.dp, width = 80.dp)
-            ) {
-                Text(text = stringResource(R.string.see_previous_card))
+        LazySwipeableCards(
+            modifier = Modifier.padding(10.dp),
+            state = state,
+            onSwipe = {item, direction ->
+                if(item.backsideIsVisible){
+                    //allow swipe
+                }
             }
-            ElevatedButton(onClick = onNextButtonClicked,
+        ) {
+            items(flashcardSet){item, index, offset ->
+                Flashcard(modifier = modifier,
+            frontsideText = stringResource(item.front),
+            backsideText = stringResource(item.back),
+            backIsVisible = item.backsideIsVisible,
+                    onSeeBacksideClicked = {item.backsideIsVisible = true})
+
+            }
+        }
+        ReactionButtonRow(backIsVisible = backIsVisible)
+    }
+
+}
+
+
+@Composable
+fun ReactionButtonRow(modifier: Modifier = Modifier,
+                      backIsVisible: Boolean
+                      ){
+    Row(modifier = modifier
+        .fillMaxSize()
+        .padding(20.dp), verticalAlignment = Alignment.Bottom) {
+        OutlinedButton(onClick = {  }
+            , modifier = modifier
+                .weight(0.5f)
+                .padding(end = 10.dp)
+                .size(height = 50.dp, width = 80.dp)
+        ) {
+            Text(text = stringResource(R.string.see_previous_card))
+        }
+        ElevatedButton(onClick = {},
 //                val vibrator = context.getSystemService(Vibrator::class.java)
 //                vibrator?.vibrate(VibrationEffect.createOneShot(200, 30))
-             modifier = modifier
+            modifier = modifier
                 .weight(0.5f)
                 .padding(start = 10.dp)
                 .size(height = 50.dp, width = 80.dp),
-                elevation = ButtonDefaults.elevatedButtonElevation(6.dp),
-                colors = ButtonDefaults.elevatedButtonColors(Color.White),
-            ) {
-                Text(text = stringResource(if(!backIsVisible){
-                    R.string.button_get_answer
-                }else{
-                    R.string.button_next_card
-                }))
-            }
+            elevation = ButtonDefaults.elevatedButtonElevation(6.dp),
+            colors = ButtonDefaults.elevatedButtonColors(Color.White),
+        ) {
+            Text(text = stringResource(if(!backIsVisible){
+                R.string.button_get_answer
+            }else{
+                R.string.button_next_card
+            }))
         }
     }
-
 }
 
 @Composable
 fun Flashcard(modifier: Modifier = Modifier,
               frontsideText: String = "",
               backsideText: String = "",
-              backIsVisible: Boolean = false){
-    val gradientBrush =
-        Brush.horizontalGradient(
-            colors = listOf(Color.Red, Color.Blue, Color.Green),
-            startX = 0.0f,
-            endX = 50.0f,
-            tileMode = TileMode.Mirror,
-        )
-    Column(modifier = modifier.fillMaxWidth(0.9f)
+              backIsVisible: Boolean = false,
+              onSeeBacksideClicked: () -> Unit){
+    Column(modifier = modifier
+        .fillMaxWidth(0.9f)
         .fillMaxHeight(0.8f)
-//        .shadow(20.dp, RoundedCornerShape(40.dp), spotColor = Color.Blue)
-        .border(width = 2.dp, brush = Brush.radialGradient(
-            listOf(Color(0xCCCCCCCC), Color(0xCCCCCCCC))
-        ), shape = RoundedCornerShape(40.dp)
+        .border(
+            width = 2.dp,
+            brush = Brush.radialGradient(
+                listOf(Color(0xCCCCCCCC), Color(0xCCCCCCCC))
+            ), shape = RoundedCornerShape(40.dp)
         )
-        ,
-        horizontalAlignment = Alignment.CenterHorizontally,
+//        .background(Color.Black)
+//        .shadow(20.dp, RoundedCornerShape(40.dp), spotColor = Color.Blue)
+        ,horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center) {
-        Text(text = frontsideText,
-            textAlign = TextAlign.Center,
-            fontSize = 20.sp,
-            modifier = Modifier.padding(20.dp))
-        HorizontalDivider(modifier = Modifier.fillMaxWidth(0.9f), thickness = 2.dp, color = Color.DarkGray)
-        Text(text = backsideText,
-            textAlign = TextAlign.Center,
-            fontSize = 20.sp,
-            modifier = Modifier.padding(20.dp)
-                .alpha(if(backIsVisible){
-                    1f
-                }else{
-                    0f
-                }))
-    }
+        Card(modifier = modifier
+            .fillMaxSize()
+            .clickable(
+                enabled = !backIsVisible,
+                onClick = onSeeBacksideClicked
+            )
 
+        ) {
+            Text(text = frontsideText,
+                textAlign = TextAlign.Center,
+                fontSize = 20.sp,
+                modifier = Modifier.padding(20.dp))
+            HorizontalDivider(modifier = Modifier.fillMaxWidth(0.9f), thickness = 2.dp, color = Color.DarkGray)
+            Text(text = backsideText,
+                textAlign = TextAlign.Center,
+                fontSize = 20.sp,
+                modifier = Modifier
+                    .padding(20.dp)
+                    .alpha(
+                        if (backIsVisible) {
+                            1f
+                        } else {
+                            0f
+                        }
+                    ))
+        }
+    }
 }
 
 @Preview(showBackground = true)
 @Composable
 fun FlashCardScreenPreview(){
-    FlashCardTest(onNextButtonClicked = {},
-        onBackButtonClicked = {},
+    FlashCardTest(onBackButtonClicked = {},
         flashcardSet = tlgi_flashcards
     )
 }

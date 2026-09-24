@@ -98,8 +98,7 @@ fun FlashCardAppTopBar(canNavigateBack: Boolean,
 @Preview(showBackground = false)
 @Composable
 fun FlashCardPreview(){
-    FlashCardTest(onNextButtonClicked = {},
-        onBackButtonClicked = {},
+    FlashCardTest(onBackButtonClicked = {},
         flashcardSet = tlgi_flashcards
     )
 }
