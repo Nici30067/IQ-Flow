@@ -77,8 +77,8 @@ fun FlashCardTest(
             items(flashcardSet){item, index, offset ->
                 var backsideIsVVVisible by remember { mutableStateOf(false) }
                 Flashcard(modifier = modifier,
-            frontsideText = stringResource(item.front),
-            backsideText = stringResource(item.back),
+            frontsideText = item.front,
+            backsideText = item.back,
             backIsVisible = backsideIsVVVisible,
                     onSeeBacksideClicked = {backsideIsVVVisible = true})
 

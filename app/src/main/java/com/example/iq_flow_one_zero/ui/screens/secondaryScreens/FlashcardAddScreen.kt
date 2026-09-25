@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun FlashcardAddScreen(onAddNewCardsClicked: () -> Unit){
+fun FlashcardAddScreen(onAddNewCardsClicked: (front: String, back: String) -> Unit){
     Column(verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()) {
@@ -40,14 +40,16 @@ fun FlashcardAddScreen(onAddNewCardsClicked: () -> Unit){
             label = {Text("Rückseite")},
             onValueChange = {backInput = it},
             modifier = Modifier.padding(12.dp))
-        Button(onClick = {}) {
+        Button(onClick = {
+            onAddNewCardsClicked(frontInput, backInput)
+        }) {
             Text(text = "Karte hinzufügen")
         }
     }
 }
 
-@Composable
-@Preview(showBackground = true)
-fun FlashcardAddScreenPreview(){
-    FlashcardAddScreen(onAddNewCardsClicked = {})
-}
+//@Composable
+//@Preview(showBackground = true)
+//fun FlashcardAddScreenPreview(){
+//    FlashcardAddScreen(onAddNewCardsClicked = {})
+//}

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -23,6 +24,7 @@ import com.example.iq_flow_one_zero.ui.screens.LibraryScreen
 import com.example.iq_flow_one_zero.ui.screens.PersonalScreen
 import com.example.iq_flow_one_zero.ui.screens.StatisticsScreen
 import com.example.iq_flow_one_zero.ui.screens.secondaryScreens.FlashcardAddScreen
+import kotlinx.coroutines.launch
 
 @Composable
 fun NavigationHost(
@@ -34,6 +36,8 @@ fun NavigationHost(
     contentPadding: PaddingValues,
 ) {
     val displayUiState by displayViewModel.uiState.collectAsState()
+    val coroutineScope = rememberCoroutineScope()
+
 
     NavHost(
         navController,
@@ -77,7 +81,12 @@ fun NavigationHost(
             )
         }
         composable(route = DetailScreens.ADD_CARDS.name) {
-            FlashcardAddScreen(onAddNewCardsClicked = {  })
+            FlashcardAddScreen(onAddNewCardsClicked = {front, back ->
+                coroutineScope.launch {
+                    displayViewModel.saveFlashcard(front, back)
+                }
+                navController.navigateUp()
+            })
         }
         composable(
             route = DetailScreens.CARD_REVIEW.name,

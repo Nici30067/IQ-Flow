@@ -65,10 +65,10 @@ fun DeckDetailsScreen(
                     Card(modifier = Modifier
                         .fillMaxWidth()
                         .padding(vertical = 12.dp)) {
-                        Text(text = stringResource(flashcard.front), modifier = Modifier.padding(12.dp))
+                        Text(text = flashcard.front, modifier = Modifier.padding(12.dp))
                         HorizontalDivider()
                         Text(
-                            text = stringResource(flashcard.back),
+                            text = flashcard.back,
                             modifier = Modifier.padding(12.dp)
                         )
                     }

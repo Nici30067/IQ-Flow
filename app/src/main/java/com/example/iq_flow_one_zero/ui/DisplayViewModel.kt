@@ -6,6 +6,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.iq_flow_one_zero.R
 import com.example.iq_flow_one_zero.data.Flashcard
+import com.example.iq_flow_one_zero.data.FlashcardRepository
 import com.example.iq_flow_one_zero.data.FlashcardSet
 import com.example.iq_flow_one_zero.data.tlgi_flashcards
 import kotlinx.coroutines.flow.Flow
@@ -15,10 +16,14 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.update
 
-class DisplayViewModel: ViewModel() {
+class DisplayViewModel(private val flashcardRepository: FlashcardRepository): ViewModel() {
     private val _uiState = MutableStateFlow(DisplayUiState())
     val uiState: StateFlow<DisplayUiState> = _uiState.asStateFlow()
 
+    suspend fun saveFlashcard(front: String, back: String){
+
+        flashcardRepository.insertFlashcard(Flashcard(front = front, back = back) )
+    }
     fun getFullFlashcardSet(): Flow<List<FlashcardSet>> = flowOf(
         listOf(
             //sample data: Need to be replaced
@@ -27,7 +32,7 @@ class DisplayViewModel: ViewModel() {
     )
     fun getSingleFlashcardSet(): Flow<List<Flashcard>> = flowOf(
         listOf(
-            Flashcard(front = R.string.mathe_backside_string_drei, back = R.string.mathe_backside_string_drei)
+            Flashcard(front = R.string.mathe_backside_string_drei.toString(), back = R.string.mathe_backside_string_drei.toString())
         )
     )
 
@@ -80,7 +85,8 @@ class DisplayViewModel: ViewModel() {
     companion object {
         val factory : ViewModelProvider.Factory = viewModelFactory {
             initializer {
-                DisplayViewModel()
+                val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as FlashcardApplication)
+                DisplayViewModel(application.container.flashcardRepository)
             }
         }
     }

@@ -2,11 +2,16 @@ package com.example.iq_flow_one_zero.data
 
 import androidx.annotation.StringRes
 import androidx.compose.ui.res.stringResource
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.example.iq_flow_one_zero.R
 
+@Entity(tableName = "flashcard_table")
 data class Flashcard(
-    @StringRes val front: Int,
-    @StringRes val back: Int,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val front: String,
+    val back: String,
     var backsideIsVisible: Boolean = false
 )
 data class FlashcardSet(
@@ -15,21 +20,21 @@ data class FlashcardSet(
 )
 
 val tlgi_flashcards = listOf<Flashcard>(
-    Flashcard(front = R.string.frontside_string_eins, back = R.string.backside_string_eins),
-    Flashcard(front = R.string.frontside_string_zwei, back = R.string.backside_string_zwei),
-    Flashcard(front = R.string.frontside_string_drei, back = R.string.backside_string_drei)
+    Flashcard(front = R.string.frontside_string_eins.toString(), back = R.string.backside_string_eins.toString()),
+    Flashcard(front = R.string.frontside_string_zwei.toString(), back = R.string.backside_string_zwei.toString()),
+    Flashcard(front = R.string.frontside_string_drei.toString(), back = R.string.backside_string_drei.toString())
 )
 
 val mathe_flashcards = listOf<Flashcard>(
-    Flashcard(front = R.string.frontside_string_eins, back = R.string.backside_string_eins),
-    Flashcard(front = R.string.frontside_string_zwei, back = R.string.backside_string_zwei),
-    Flashcard(front = R.string.frontside_string_drei, back = R.string.backside_string_drei)
+    Flashcard(front = R.string.frontside_string_eins.toString(), back = R.string.backside_string_eins.toString()),
+    Flashcard(front = R.string.frontside_string_zwei.toString(), back = R.string.backside_string_zwei.toString()),
+    Flashcard(front = R.string.frontside_string_drei.toString(), back = R.string.backside_string_drei.toString())
 )
 
 val englisch_flashcards = listOf<Flashcard>(
-    Flashcard(front = R.string.frontside_string_eins, back = R.string.backside_string_eins),
-    Flashcard(front = R.string.frontside_string_zwei, back = R.string.backside_string_zwei),
-    Flashcard(front = R.string.frontside_string_drei, back = R.string.backside_string_drei)
+    Flashcard(front = R.string.frontside_string_eins.toString(), back = R.string.backside_string_eins.toString()),
+    Flashcard(front = R.string.frontside_string_zwei.toString(), back = R.string.backside_string_zwei.toString()),
+    Flashcard(front = R.string.frontside_string_drei.toString(), back = R.string.backside_string_drei.toString())
 )
 
 val mainFlashcardList = listOf<FlashcardSet>(
