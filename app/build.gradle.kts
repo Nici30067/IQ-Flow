@@ -48,6 +48,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
     implementation(libs.androidx.navigation.compose)
     implementation("androidx.compose.material:material-icons-extended")
+//    implementation("androidx.room:room-ktx:2.8.5")
+//    implementation("androidx.room:room-compiler:2.8.5")
 
     testImplementation(libs.junit)
 

@@ -9,6 +9,10 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,19 +25,20 @@ fun FlashcardAddScreen(onAddNewCardsClicked: () -> Unit){
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()) {
 
-
+        var frontInput by remember {  mutableStateOf("") }
+        var backInput by remember {  mutableStateOf("") }
         Text(text = "neue karteikarten adden",
             fontSize = 30.sp,
             modifier = Modifier.padding(12.dp))
 
 
-        OutlinedTextField(value = "",
+        OutlinedTextField(value = frontInput,
             label = {Text("Vorderseite")},
-            onValueChange = {},
+            onValueChange = {frontInput = it},
             modifier = Modifier.padding(12.dp))
-        OutlinedTextField(value = "",
+        OutlinedTextField(value = backInput,
             label = {Text("Rückseite")},
-            onValueChange = {},
+            onValueChange = {backInput = it},
             modifier = Modifier.padding(12.dp))
         Button(onClick = {}) {
             Text(text = "Karte hinzufügen")
@@ -42,7 +47,7 @@ fun FlashcardAddScreen(onAddNewCardsClicked: () -> Unit){
 }
 
 @Composable
-@Preview
+@Preview(showBackground = true)
 fun FlashcardAddScreenPreview(){
     FlashcardAddScreen(onAddNewCardsClicked = {})
 }
