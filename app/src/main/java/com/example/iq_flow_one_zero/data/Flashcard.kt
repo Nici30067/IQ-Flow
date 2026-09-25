@@ -1,6 +1,7 @@
 package com.example.iq_flow_one_zero.data
 
 import androidx.annotation.StringRes
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -18,9 +19,8 @@ data class FlashcardSet(
      val flashcardListName: Int,
     val flashcardList: List<Flashcard>
 )
-
 val tlgi_flashcards = listOf<Flashcard>(
-    Flashcard(front = R.string.frontside_string_eins.toString(), back = R.string.backside_string_eins.toString()),
+    Flashcard(front = "Wie viele Vorkomma und Nachkommastellen hat das Dualsystem Qm.n?", back = "m Vorkommastellen und n Nachkommastellen"),
     Flashcard(front = R.string.frontside_string_zwei.toString(), back = R.string.backside_string_zwei.toString()),
     Flashcard(front = R.string.frontside_string_drei.toString(), back = R.string.backside_string_drei.toString())
 )
