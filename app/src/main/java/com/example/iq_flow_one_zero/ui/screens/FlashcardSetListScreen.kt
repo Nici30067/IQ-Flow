@@ -14,17 +14,22 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.iq_flow_one_zero.data.FlashcardSet
+import com.example.iq_flow_one_zero.ui.DisplayViewModel
 
 @Composable
 fun FlashcardListScreen(
     flashcardSets: List<FlashcardSet>,
     onFlashcardsetClicked: (Int) -> Unit,
     contentPadding: PaddingValues = PaddingValues(0.dp)
+
 ) {
 
     Column(

@@ -13,6 +13,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.iq_flow_one_zero.data.Flashcard
 import com.example.iq_flow_one_zero.data.FlashcardSet
 import com.example.iq_flow_one_zero.data.mainFlashcardList
 import com.example.iq_flow_one_zero.data.tlgi_flashcards
@@ -28,7 +29,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun NavigationHost(
-    singleFlashcardSet: FlashcardSet = mainFlashcardList[0],
+    flashcardList: List<Flashcard>,
     displayViewModel: DisplayViewModel,
     navController: NavHostController,
     startDestination: Destination,
@@ -75,7 +76,7 @@ fun NavigationHost(
                     navController.navigate(DetailScreens.CARD_REVIEW.name)
                 },
                 onAddNewCardsClicked = {navController.navigate(DetailScreens.ADD_CARDS.name)},
-                flashcardsList = displayUiState.nameOfCurrentlyLearningFlashcardSet,
+                flashcardsList = flashcardList,
                 contentPadding = contentPadding
 
             )
@@ -100,7 +101,7 @@ fun NavigationHost(
                 onBackButtonClicked = {},
                 backIsVisible = displayUiState.isBacksideShown,
                 contentPadding = contentPadding,
-                flashcardSet = displayUiState.nameOfCurrentlyLearningFlashcardSet,
+                flashcardSet = flashcardList,
                 modifier = Modifier
             )
         }

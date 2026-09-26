@@ -37,8 +37,9 @@ fun FlashcardApp(modifier: Modifier = Modifier,
     val canNavigateBack: Boolean = backStackEntry?.destination?.route != Destination.List.name
     val startDestination = Destination.List
 
+    val homeUiState by displayViewModel.homeUiState.collectAsState()
+
     val fullFlashcardSet by displayViewModel.getFullFlashcardSet().collectAsState(emptyList())
-    //val singleFlashcardSet = fullFlashcardSet[0]
 
     Scaffold(topBar = {
         FlashCardAppTopBar( canNavigateBack = canNavigateBack,
@@ -55,7 +56,7 @@ fun FlashcardApp(modifier: Modifier = Modifier,
         modifier = Modifier.fillMaxSize()
     ){
         NavigationHost(
-            //singleFlashcardSet = singleFlashcardSet,
+            flashcardList = homeUiState.flashcardList,
             displayViewModel = displayViewModel,
             navController = navController,
             startDestination = startDestination,
