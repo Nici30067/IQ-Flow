@@ -1,4 +1,5 @@
 package com.example.iq_flow_one_zero.ui
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -39,8 +40,8 @@ fun FlashcardApp(modifier: Modifier = Modifier,
 
     val homeUiState by displayViewModel.homeUiState.collectAsState()
 
-    val fullFlashcardSet by displayViewModel.getFullFlashcardSet().collectAsState(emptyList())
-
+    val currentScreen = backStackEntry?.destination
+    Log.d("error now", "der FEhler liegt bie${currentScreen?.route}")
     Scaffold(topBar = {
         FlashCardAppTopBar( canNavigateBack = canNavigateBack,
                             navigateUp = { navController.navigateUp() })

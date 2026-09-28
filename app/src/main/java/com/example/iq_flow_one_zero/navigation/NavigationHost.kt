@@ -42,11 +42,11 @@ fun NavigationHost(
 
     NavHost(
         navController,
-        startDestination = startDestination.route
+        startDestination = startDestination.name
     ) {
         Destination.entries.forEach { destination ->
             composable(
-                destination.route
+                destination.name
 //                enterTransition = { EnterTransition.None},
 //                exitTransition = { ExitTransition.None}
             ) {

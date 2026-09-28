@@ -11,6 +11,10 @@
     <string name="app_navigation_item_2">Bibliohek</string>
     <string name="app_navigation_item_3">Statistik</string>
     <string name="app_navigation_item_4">Account</string>
+    <string name="app_navigation_item_1_en">List</string>
+    <string name="app_navigation_item_2_en">Library</string>
+    <string name="app_navigation_item_3_en">Stats</string>
+    <string name="app_navigation_item_4_en">Account</string>
 
     <string name="frontside_string_eins">"Wie viele Vorkomma und Nachkommastellen hat das Dualsystem Qm.n?"</string>
     <string name="frontside_string_zwei">"Wie nennt man ein Übertragsbit auch?"</string>
