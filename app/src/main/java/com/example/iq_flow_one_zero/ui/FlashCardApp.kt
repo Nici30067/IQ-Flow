@@ -41,7 +41,7 @@ fun FlashcardApp(modifier: Modifier = Modifier,
     val homeUiState by displayViewModel.homeUiState.collectAsState()
 
     val currentScreen = backStackEntry?.destination?: error("Top level nav item not found!")
-        Log.d("error now", "der FEhler liegt bie${currentScreen?.route}, der screentitle sollte ${currentScreen.}")
+        Log.d("error now", "der FEhler liegt bie${currentScreen?.route}, der screentitle sollte ${currentScreen}")
     Scaffold(topBar = {
         FlashCardAppTopBar( canNavigateBack = canNavigateBack,
                             navigateUp = { navController.navigateUp() })
