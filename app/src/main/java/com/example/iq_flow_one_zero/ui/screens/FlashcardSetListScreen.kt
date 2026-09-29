@@ -19,15 +19,19 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.iq_flow_one_zero.data.FlashcardSet
+import com.example.iq_flow_one_zero.data.mainFlashcardList
+import com.example.iq_flow_one_zero.data.tlgi_flashcards
 import com.example.iq_flow_one_zero.ui.DisplayViewModel
+import com.example.iq_flow_one_zero.ui.components.FlashcardSetButton
 
 @Composable
 fun FlashcardListScreen(
     flashcardSets: List<FlashcardSet>,
-    onFlashcardsetClicked: (Int) -> Unit,
+    onFlashcardsetClicked: (String) -> Unit,
     contentPadding: PaddingValues = PaddingValues(0.dp)
 
 ) {
@@ -61,8 +65,10 @@ fun FlashcardListScreen(
                     items(flashcardSets) { flashcardSet ->
                         FlashcardSetButton(
                             onFlashcardsetClicked = onFlashcardsetClicked,
-                            flashcardSet = flashcardSet
+                            textOnButton = stringResource(flashcardSet.flashcardListName)
                         )
+                        FlashcardSetButton(onFlashcardsetClicked = {},
+                            textOnButton = "+")
                     }
 
                 }
@@ -72,28 +78,13 @@ fun FlashcardListScreen(
     }
 }
 
+
+
+
+@Preview
 @Composable
-fun FlashcardSetButton(
-    onFlashcardsetClicked: (Int) -> Unit,
-    flashcardSet: FlashcardSet
-) {
-    Button(
-        onClick = { onFlashcardsetClicked(flashcardSet.flashcardListName) },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(12.dp)
-    ) {
-        Text(
-            text = stringResource(flashcardSet.flashcardListName),
-            modifier = Modifier.padding(12.dp)
-        )
-    }
+fun FlashcardListPreview(){
+    FlashcardListScreen(onFlashcardsetClicked = {},
+        flashcardSets = mainFlashcardList
+    )
 }
-
-
-//@Preview
-//@Composable
-//fun FlashcardListPreview(){
-//    FlashcardListScreen(onFlashcardsetClicked = {},
-//        displayViewModel = )
-//}
