@@ -1,6 +1,5 @@
 # IQ-Flow-Flashcards
 
-# Description
 This is an open source Project by developers for developers to visualize futuristic and modern user interface & user interaction. Maybe some of the displayed features and designs will be used by big flashcard apps ;)
 
 ## App Architecture (Backend)
