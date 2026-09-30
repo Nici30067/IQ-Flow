@@ -1,5 +1,9 @@
 package com.example.iq_flow_one_zero.ui
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -30,6 +34,15 @@ class DisplayViewModel(private val flashcardRepository: FlashcardRepository): Vi
         initialValue = DisplayUiState()
     )
 
+    var isAddDeckDialogShown by  mutableStateOf(false)
+        private set
+    fun onAddDecksClicked(){
+        isAddDeckDialogShown = true
+    }
+
+    fun onAddDecksDismissed(){
+        isAddDeckDialogShown = false
+    }
     suspend fun saveFlashcard(front: String, back: String){
 
         flashcardRepository.insertFlashcard(Flashcard(front = front, back = back) )

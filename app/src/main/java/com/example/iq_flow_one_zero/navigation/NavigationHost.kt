@@ -1,7 +1,5 @@
 package com.example.iq_flow_one_zero.navigation
 
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -14,9 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.iq_flow_one_zero.data.Flashcard
-import com.example.iq_flow_one_zero.data.FlashcardSet
 import com.example.iq_flow_one_zero.data.mainFlashcardList
-import com.example.iq_flow_one_zero.data.tlgi_flashcards
 import com.example.iq_flow_one_zero.ui.DisplayViewModel
 import com.example.iq_flow_one_zero.ui.screens.DeckDetailsScreen
 import com.example.iq_flow_one_zero.ui.screens.FlashCardTest
@@ -52,11 +48,14 @@ fun NavigationHost(
             ) {
                 when (destination) {
                     Destination.List -> FlashcardListScreen(
+                        onAddFlashcardSetClicked = { displayViewModel.onAddDecksClicked() },
                         flashcardSets = mainFlashcardList,
                         onFlashcardsetClicked = { flashcardSetNameAsString ->
                             navController.navigate("${DetailScreens.DECK_DETAILS.name}/$flashcardSetNameAsString")
 //                            displayViewModel.updateCurrentlyLearningFlashcards(it)
-                        })
+                        },
+                        isAddDecksDialogShown = displayViewModel.isAddDeckDialogShown,
+                        onDismissRequestAction = { displayViewModel.onAddDecksDismissed() })
 
                     Destination.Library -> LibraryScreen(contentPadding = contentPadding)
                     Destination.Statistics -> StatisticsScreen(contentPadding = contentPadding)
