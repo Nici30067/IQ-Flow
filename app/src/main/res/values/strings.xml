@@ -36,4 +36,7 @@
     <string name="englisch_backside_string_eins">"betray"</string>
     <string name="englisch_backside_string_zwei">"Was ist der plural von information"</string>
     <string name="englisch_backside_string_drei">"(multiple) information"</string>
+
+    <string name="create">Create</string>
+    <string name="cancel">Cancel</string>
 </resources>

@@ -11,8 +11,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Preview
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -31,6 +33,7 @@ import androidx.compose.ui.window.Dialog
 import com.example.iq_flow_one_zero.data.FlashcardSet
 import com.example.iq_flow_one_zero.data.mainFlashcardList
 import com.example.iq_flow_one_zero.ui.DisplayViewModel
+import com.example.iq_flow_one_zero.ui.components.DialogWithTextField
 import com.example.iq_flow_one_zero.ui.components.FlashcardSetButton
 
 @Composable
@@ -38,15 +41,16 @@ fun FlashcardListScreen(
     flashcardSets: List<FlashcardSet>,
     onFlashcardsetClicked: (String) -> Unit,
     contentPadding: PaddingValues = PaddingValues(0.dp),
-    onAddFlashcardSetClicked: (String) -> Unit,
+    onAddFlashcardSetClicked: () -> Unit,
     isAddDecksDialogShown: Boolean,
     onDismissRequestAction: () -> Unit
 
 ) {
     if (isAddDecksDialogShown) {
         Box(){
-            Dialog(
-                onDismissRequestAction = onDismissRequestAction
+            DialogWithTextField(
+                onDismissRequest = onDismissRequestAction,
+                onConfirmation = {}
             )
         }
     }
@@ -82,8 +86,16 @@ fun FlashcardListScreen(
                             onFlashcardsetClicked = onFlashcardsetClicked,
                             textOnButton = stringResource(flashcardSet.flashcardListName)
                         )
-                        FlashcardSetButton(onFlashcardsetClicked = onAddFlashcardSetClicked,
-                            textOnButton = "+")
+                        Button(
+                            onClick = onAddFlashcardSetClicked,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(12.dp)
+                        ) {
+                            Icon(Icons.Default.Add, contentDescription = "",
+                                modifier = Modifier.padding(12.dp))
+                        }
+
                     }
 
                 }
@@ -93,66 +105,6 @@ fun FlashcardListScreen(
     }
 }
 
-@Composable
-fun Dialog(
-    onDismissRequestAction: () -> Unit
-){
-    val openAlertDialog = remember { mutableStateOf(false) }
-
-        AlertDialogExample(
-            onDismissRequest = onDismissRequestAction,
-            onConfirmation = {
-                //do confirmation shit
-                onDismissRequestAction()
-            },
-            dialogText = "Please enter deck name",
-            dialogTitle = "Create new Deck",
-            icon = Icons.Default.Preview
-        )
-    }
-
-
-@Composable
-fun AlertDialogExample(
-    onDismissRequest: () -> Unit,
-    onConfirmation: () -> Unit,
-    dialogTitle: String,
-    dialogText: String,
-    icon: ImageVector,
-) {
-    AlertDialog(
-        icon = {
-            Icon(icon, contentDescription = "Example Icon")
-        },
-        title = {
-            Text(text = dialogTitle)
-        },
-        text = {
-            Text(text = dialogText)
-        },
-        onDismissRequest = {
-            onDismissRequest()
-        },
-        confirmButton = {
-            TextButton(
-                onClick = {
-                    onConfirmation()
-                }
-            ) {
-                Text("Create")
-            }
-        },
-        dismissButton = {
-            TextButton(
-                onClick = {
-                    onDismissRequest()
-                }
-            ) {
-                Text("Cancel")
-            }
-        }
-    )
-}
 
 
 @Preview
