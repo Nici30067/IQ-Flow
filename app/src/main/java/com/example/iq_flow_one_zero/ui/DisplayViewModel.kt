@@ -54,13 +54,6 @@ class DisplayViewModel(private val flashcardRepository: FlashcardRepository): Vi
         )
     )
 
-    fun updateCurrentlyLearningFlashcards(flashcardSet: List<Flashcard>){
-        _uiState.update { currentState ->
-            currentState.copy(
-                nameOfCurrentlyLearningFlashcardSet = flashcardSet
-            )
-        }
-    }
     fun updateFlashcardState(){
         if(uiState.value.isBacksideShown){
             hideBackside()
