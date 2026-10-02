@@ -5,6 +5,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Transaction
 import androidx.room.Update
 import kotlinx.coroutines.flow.Flow
 
@@ -12,6 +13,12 @@ import kotlinx.coroutines.flow.Flow
 interface FlashcardDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun saveFlashcard(flashcard: Flashcard)
+//    @Insert(onConflict = OnConflictStrategy.IGNORE)
+//    suspend fun saveFlashcardSet(name: String)
+
+//    @Transaction
+//    @Query("SELECT * FROM flashcard_table WHERE idOfParentList = :id")
+//    suspend fun getFlashcardAndFlashcardSetWithId(id: Int)
 
     @Update
     suspend fun updateFlashcard(flashcard: Flashcard)
