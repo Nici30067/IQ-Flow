@@ -19,6 +19,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -36,35 +37,64 @@ fun DeckDetailsScreen(
     contentPadding: PaddingValues = PaddingValues(0.dp),
     flashcardsList: List<Flashcard>,
     onStartLearningClicked: () -> Unit,
-){
-        Column(modifier = Modifier.fillMaxSize()
+) {
+    Scaffold(
+        floatingActionButton = {
+            FloatingActionButton(
+                onClick = onAddNewCardsClicked,
+                containerColor = Color.White
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Add,
+                    contentDescription = "",
+                    tint = Color.Black
+                )
+            }
+        },
+        modifier = Modifier
             .padding(contentPadding)
-            .padding(12.dp)) {
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it)
+                .padding(12.dp)
+        ) {
 
-            InformationAndStartLearningBox(onStartLearningClicked = onStartLearningClicked,
+            InformationAndStartLearningBox(
+                onStartLearningClicked = onStartLearningClicked,
                 flashcardSetName = flashcardSetName,
-                modifier = Modifier.align(Alignment.End)
+                modifier = Modifier
+                    .align(Alignment.End)
                     .fillMaxWidth()
-                    .fillMaxHeight(0.3f))
+                    .fillMaxHeight(0.3f)
+            )
             LazyColumn(modifier = Modifier) {
                 items(flashcardsList) { flashcard ->
                     FlashcardBulkDetailView(flashcard = flashcard)
                 }
             }
-        FabButton(onAddNewCardsClicked = onAddNewCardsClicked)
+        }
     }
 }
+
 @Composable
-fun InformationAndStartLearningBox(onStartLearningClicked: () -> Unit, flashcardSetName: String,
-                                   modifier: Modifier = Modifier
-){
+fun InformationAndStartLearningBox(
+    onStartLearningClicked: () -> Unit, flashcardSetName: String,
+    modifier: Modifier = Modifier
+) {
     Card(modifier = modifier) {
-        Box(modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.BottomCenter) {
-            Button(onClick = onStartLearningClicked,
-                Modifier.fillMaxWidth(0.9f)
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            Button(
+                onClick = onStartLearningClicked,
+                Modifier
+                    .fillMaxWidth(0.9f)
                     .fillMaxHeight(0.25f)
-                    .padding(bottom = 12.dp)) {
+                    .padding(bottom = 12.dp)
+            ) {
                 Text(text = "Start Learning $flashcardSetName")
             }
         }
@@ -73,9 +103,11 @@ fun InformationAndStartLearningBox(onStartLearningClicked: () -> Unit, flashcard
 
 @Composable
 fun FlashcardBulkDetailView(flashcard: Flashcard) {
-    Card(modifier = Modifier
-        .fillMaxWidth()
-        .padding(vertical = 12.dp)) {
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 12.dp)
+    ) {
         Text(text = flashcard.front, modifier = Modifier.padding(12.dp))
         HorizontalDivider()
         Text(
@@ -84,21 +116,10 @@ fun FlashcardBulkDetailView(flashcard: Flashcard) {
         )
     }
 }
-@Composable
-fun FabButton(onAddNewCardsClicked: () -> Unit){
-    Row() {
-        Spacer(modifier = Modifier.weight(1f))
-        FloatingActionButton(onClick = onAddNewCardsClicked,
-            containerColor = Color.Blue,
-            contentColor = MaterialTheme.colorScheme.onPrimary) {
-            Icon(imageVector = Icons.Default.Add,
-                contentDescription = "sldkj")
-        }
-    }
-}
+
 @Preview
 @Composable
-fun DeckDetailsScreenPreview(){
+fun DeckDetailsScreenPreview() {
     DeckDetailsScreen(
         flashcardsList = tlgi_flashcards,
         onStartLearningClicked = {},

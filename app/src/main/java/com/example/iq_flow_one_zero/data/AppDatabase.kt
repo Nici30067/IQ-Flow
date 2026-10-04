@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(version = 1, entities = [Flashcard::class])
+@Database(version = 3, entities = [Flashcard::class])
 abstract class AppDatabase: RoomDatabase() {
 
 
@@ -21,6 +21,7 @@ abstract class AppDatabase: RoomDatabase() {
                     AppDatabase::class.java,
                     "FlashcardDatabase"
                 )
+                    .fallbackToDestructiveMigration()//seit ich im dao herumgespielt habe brauch ich es
                     .build()
                 INSTANCE = instance
                 return instance
