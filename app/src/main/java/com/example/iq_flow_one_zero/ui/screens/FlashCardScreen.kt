@@ -1,6 +1,7 @@
 package com.example.iq_flow_one_zero.ui.screens
 
 import android.util.Log
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -45,6 +46,7 @@ import com.spartapps.swipeablecards.ui.SwipeableCardDirection
 import com.spartapps.swipeablecards.ui.lazy.items
 
 import com.spartapps.swipeablecards.state.rememberSwipeableCardsState
+import com.spartapps.swipeablecards.ui.SwipeableCardsProperties
 import com.spartapps.swipeablecards.ui.lazy.LazySwipeableCards
 
 
@@ -52,7 +54,6 @@ import com.spartapps.swipeablecards.ui.lazy.LazySwipeableCards
 fun FlashCardTest(
     modifier: Modifier = Modifier,
 //    onSeeBacksideClicked: () -> Unit,
-    backIsVisible: Boolean = false,
     onBackButtonClicked: () -> Unit,
     flashcardSet: List<Flashcard>,
     contentPadding: PaddingValues = PaddingValues(0.dp),
@@ -67,6 +68,14 @@ fun FlashCardTest(
         verticalArrangement = Arrangement.Center) {
         LazySwipeableCards(
             modifier = Modifier.padding(10.dp),
+            properties = SwipeableCardsProperties(
+                swipeThreshold = 100.dp
+//                    if(){
+//               800.dp
+//            }else{
+//                10.dp
+//            }
+            ),
             state = state,
             onSwipe = {item, direction ->
                 if(item.backsideIsVisible){
@@ -84,7 +93,7 @@ fun FlashCardTest(
 
             }
         }
-        ReactionButtonRow(backIsVisible = backIsVisible)
+//        ReactionButtonRow(backIsVisible = backIsVisible)
     }
 
 }
@@ -130,25 +139,27 @@ fun Flashcard(modifier: Modifier = Modifier,
               backsideText: String = "",
               backIsVisible: Boolean = false,
               onSeeBacksideClicked: () -> Unit){
-    Column(modifier = modifier
-        .fillMaxWidth(0.9f)
-        .fillMaxHeight(0.8f)
-        .border(
-            width = 2.dp,
-            brush = Brush.radialGradient(
-                listOf(Color(0xCCCCCCCC), Color(0xCCCCCCCC))
-            ), shape = RoundedCornerShape(40.dp)
-        )
-//        .background(Color.Black)
-//        .shadow(20.dp, RoundedCornerShape(40.dp), spotColor = Color.Blue)
-        ,horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center) {
+//    Column(modifier = modifier
+//        .fillMaxWidth(0.9f)
+//        .fillMaxHeight(0.8f)
+////        .border(
+////            width = 20.dp,
+////            brush = Brush.radialGradient(
+////                listOf(Color(0xCC00CC0C), Color(0xCC00CCCC))
+////            ), shape = RoundedCornerShape(40.dp)
+////        )
+////        .background(Color.Black)
+////        .shadow(20.dp, RoundedCornerShape(40.dp), spotColor = Color.Blue)
+//        ,horizontalAlignment = Alignment.CenterHorizontally,
+//        verticalArrangement = Arrangement.Center) {
         Card(modifier = modifier        //using a card as the column is somehow invisible and shows other cards at stack behind
             .fillMaxSize()
+            .padding(30.dp)
             .clickable(
                 enabled = !backIsVisible,
                 onClick = onSeeBacksideClicked
-            )
+            ),
+            border = BorderStroke(2.dp, Color.Black)
 
         ) {
             Text(text = frontsideText,
@@ -171,7 +182,7 @@ fun Flashcard(modifier: Modifier = Modifier,
                         }
                     ))
         }
-    }
+//    }
 }
 
 @Preview(showBackground = true)
