@@ -64,53 +64,53 @@ fun DeckDetailsScreen(
         modifier = Modifier
             .padding(contentPadding)
     ) {
-        Column(
+        LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-//                .padding(it)          // this led to big gap between navBar and scrollableDetailsView
                 .padding(horizontal = 12.dp)
-        ) {
-            LazyColumn(modifier = Modifier
-                .fillMaxSize()) {
-                item {
-                    Spacer(modifier = Modifier.padding(12.dp))
-                    InformationAndStartLearningBox(
-                        onStartLearningClicked = onStartLearningClicked,
-                        flashcardSetName = flashcardSetName,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(bottom = 12.dp)
-                    )
-                }
+            //                .padding(it)          // this led to big gap between navBar and scrollableDetailsView
 
-                if(flashcardsList.isEmpty()){
+        ) {
+            item {
+                Spacer(modifier = Modifier.padding(12.dp))
+                InformationAndStartLearningBox(
+                    onStartLearningClicked = onStartLearningClicked,
+                    flashcardSetName = flashcardSetName,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 12.dp)
+                )
+            }
+
+            if (flashcardsList.isEmpty()) {
                 item() {
                     NoCardsAvailable()
                 }
 
-                }else{
-                    items(flashcardsList) { flashcard ->
-                        FlashcardBulkDetailView(flashcard = flashcard)
-                    }
+            } else {
+                items(flashcardsList) { flashcard ->
+                    FlashcardBulkDetailView(flashcard = flashcard)
                 }
-
             }
+
         }
     }
 }
 
 @Composable
-fun NoCardsAvailable(modifier: Modifier = Modifier){
+fun NoCardsAvailable(modifier: Modifier = Modifier) {
 
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.CenterStart
-        ) {
-            Text("Sieht ziemlich leer aus hier. Bitte füge Karteikarten hinzu, " +
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.CenterStart
+    ) {
+        Text(
+            "Sieht ziemlich leer aus hier. Bitte füge Karteikarten hinzu, " +
                     "um mit dem lernen zu beginnen",
-                fontSize = 16.sp,
-                textAlign = TextAlign.Center)
-        }
+            fontSize = 16.sp,
+            textAlign = TextAlign.Center
+        )
+    }
 }
 
 @Composable
@@ -118,8 +118,10 @@ fun InformationAndStartLearningBox(
     onStartLearningClicked: () -> Unit, flashcardSetName: String,
     modifier: Modifier = Modifier
 ) {
-    Card(modifier = modifier
-        .height(220.dp)) {
+    Card(
+        modifier = modifier
+            .height(220.dp)
+    ) {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.BottomCenter
