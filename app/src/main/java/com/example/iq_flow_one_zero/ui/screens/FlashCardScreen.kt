@@ -77,6 +77,9 @@ fun FlashCardTest(
                 if(item.id == flashcardSet.size){
                     navController.navigateUp()
                 }
+//                if(!flashcardSet[state.currentCardIndex].backsideIsVisible){
+//                    state.goBack()
+//                }
 
             }
         ) {
