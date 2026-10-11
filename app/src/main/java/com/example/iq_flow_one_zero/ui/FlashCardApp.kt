@@ -1,5 +1,4 @@
 package com.example.iq_flow_one_zero.ui
-import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -97,13 +96,14 @@ fun FlashCardAppTopBar(canNavigateBack: Boolean,
 
 
 
-@Preview(showBackground = false)
-@Composable
-fun FlashCardPreview(){
-    FlashCardTest(onBackButtonClicked = {},
-        flashcardSet = tlgi_flashcards
-    )
-}
+//@Preview(showBackground = false)
+//@Composable
+//fun FlashCardPreview(){
+//    FlashCardTest(
+//        onBackButtonClicked = {},
+//        flashcardSet = tlgi_flashcards,
+//    )
+//}
 @Preview
 @Composable
 fun FlashcardAppPreview(){

@@ -1,21 +1,15 @@
 package com.example.iq_flow_one_zero.ui.screens
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.ElevatedButton
@@ -30,19 +24,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.TileMode
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.iq_flow_one_zero.R
 import com.example.iq_flow_one_zero.data.Flashcard
 import com.example.iq_flow_one_zero.data.tlgi_flashcards
-import com.spartapps.swipeablecards.ui.SwipeableCardDirection
 import com.spartapps.swipeablecards.ui.lazy.items
 
 import com.spartapps.swipeablecards.state.rememberSwipeableCardsState
@@ -57,6 +49,7 @@ fun FlashCardTest(
     onBackButtonClicked: () -> Unit,
     flashcardSet: List<Flashcard>,
     contentPadding: PaddingValues = PaddingValues(0.dp),
+    navController: NavHostController,
 ){
 //    val context = LocalContext.current        for vibrations
     val state = rememberSwipeableCardsState(itemCount = { flashcardSet.size })
@@ -81,21 +74,23 @@ fun FlashCardTest(
                 if(item.backsideIsVisible){
                     //allow swipe
                 }
+                if(item.id == flashcardSet.size){
+                    navController.navigateUp()
+                }
+
             }
         ) {
             items(flashcardSet){item, index, offset ->
-                var backsideIsVVVisible by remember { mutableStateOf(false) }
+                var backsideIsVisible by remember { mutableStateOf(false) }
                 Flashcard(modifier = modifier,
             frontsideText = item.front,
             backsideText = item.back,
-            backIsVisible = backsideIsVVVisible,
-                    onSeeBacksideClicked = {backsideIsVVVisible = true})
+            backIsVisible = backsideIsVisible,
+                    onSeeBacksideClicked = {backsideIsVisible = true})
 
             }
         }
-//        ReactionButtonRow(backIsVisible = backIsVisible)
     }
-
 }
 
 
@@ -139,19 +134,6 @@ fun Flashcard(modifier: Modifier = Modifier,
               backsideText: String = "",
               backIsVisible: Boolean = false,
               onSeeBacksideClicked: () -> Unit){
-//    Column(modifier = modifier
-//        .fillMaxWidth(0.9f)
-//        .fillMaxHeight(0.8f)
-////        .border(
-////            width = 20.dp,
-////            brush = Brush.radialGradient(
-////                listOf(Color(0xCC00CC0C), Color(0xCC00CCCC))
-////            ), shape = RoundedCornerShape(40.dp)
-////        )
-////        .background(Color.Black)
-////        .shadow(20.dp, RoundedCornerShape(40.dp), spotColor = Color.Blue)
-//        ,horizontalAlignment = Alignment.CenterHorizontally,
-//        verticalArrangement = Arrangement.Center) {
         Card(modifier = modifier        //using a card as the column is somehow invisible and shows other cards at stack behind
             .fillMaxSize()
             .padding(30.dp)
@@ -182,13 +164,13 @@ fun Flashcard(modifier: Modifier = Modifier,
                         }
                     ))
         }
-//    }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun FlashCardScreenPreview(){
-    FlashCardTest(onBackButtonClicked = {},
-        flashcardSet = tlgi_flashcards
-    )
-}
+//@Preview(showBackground = true)
+//@Composable
+//fun FlashCardScreenPreview(){
+//    FlashCardTest(
+//        onBackButtonClicked = {},
+//        flashcardSet = tlgi_flashcards,
+//    )
+//}

@@ -98,7 +98,8 @@ fun NavigationHost(
 //                currentDisplayedCard = displayUiState.currentFlashcardId,
 //                onSeeBacksideClicked = { displayViewModel.updateFlashcardState() },
                 onBackButtonClicked = {},
-                backIsVisible = displayUiState.isBacksideShown,
+                navController = navController,
+//                backIsVisible = displayUiState.isBacksideShown,
                 contentPadding = contentPadding,
                 flashcardSet = flashcardList,
                 modifier = Modifier
