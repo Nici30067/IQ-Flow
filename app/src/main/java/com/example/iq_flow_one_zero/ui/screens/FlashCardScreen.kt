@@ -1,5 +1,6 @@
 package com.example.iq_flow_one_zero.ui.screens
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -53,6 +54,13 @@ fun FlashCardTest(
 ){
 //    val context = LocalContext.current        for vibrations
     val state = rememberSwipeableCardsState(itemCount = { flashcardSet.size })
+    val swipeThreshold by remember {
+        if(flashcardSet[state.currentCardIndex].backsideIsVisible){
+            mutableStateOf(80.dp)
+        }else{
+            mutableStateOf(1000.dp)
+        }
+    }
 
     Column(modifier = modifier
         .fillMaxSize()
@@ -62,18 +70,10 @@ fun FlashCardTest(
         LazySwipeableCards(
             modifier = Modifier.padding(10.dp),
             properties = SwipeableCardsProperties(
-                swipeThreshold = 100.dp
-//                    if(){
-//               800.dp
-//            }else{
-//                10.dp
-//            }
+                swipeThreshold = swipeThreshold
             ),
             state = state,
             onSwipe = {item, direction ->
-                if(item.backsideIsVisible){
-                    //allow swipe
-                }
                 if(item.id == flashcardSet.size){
                     navController.navigateUp()
                 }
@@ -86,7 +86,12 @@ fun FlashCardTest(
             frontsideText = item.front,
             backsideText = item.back,
             backIsVisible = backsideIsVisible,
-                    onSeeBacksideClicked = {backsideIsVisible = true})
+                    onSeeBacksideClicked = {backsideIsVisible = true //item.backsideIsVisible
+                        Log.d("logOfBackside", "${flashcardSet[state.currentCardIndex].backsideIsVisible} zustand vorher")
+
+                        flashcardSet[state.currentCardIndex].backsideIsVisible = true
+                        Log.d("logOfBackside", "${flashcardSet[state.currentCardIndex].backsideIsVisible} ist der zustand von meiner var")
+                    })
 
             }
         }
