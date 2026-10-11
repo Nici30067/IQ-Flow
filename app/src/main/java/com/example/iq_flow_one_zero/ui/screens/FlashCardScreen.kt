@@ -1,5 +1,6 @@
 package com.example.iq_flow_one_zero.ui.screens
 
+import android.annotation.SuppressLint
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
@@ -43,6 +44,7 @@ import com.spartapps.swipeablecards.ui.SwipeableCardsProperties
 import com.spartapps.swipeablecards.ui.lazy.LazySwipeableCards
 
 
+@SuppressLint("UnrememberedMutableState")
 @Composable
 fun FlashCardTest(
     modifier: Modifier = Modifier,
@@ -54,13 +56,11 @@ fun FlashCardTest(
 ){
 //    val context = LocalContext.current        for vibrations
     val state = rememberSwipeableCardsState(itemCount = { flashcardSet.size })
-    val swipeThreshold by remember {
-        if(flashcardSet[state.currentCardIndex].backsideIsVisible){
-            mutableStateOf(80.dp)
-        }else{
-            mutableStateOf(1000.dp)
-        }
-    }
+//    val swipeThreshold = if(flashcardSet[state.currentCardIndex].backsideIsVisible){
+//            80.dp
+//        }else {
+//            1000.dp
+//        }
 
     Column(modifier = modifier
         .fillMaxSize()
@@ -70,7 +70,7 @@ fun FlashCardTest(
         LazySwipeableCards(
             modifier = Modifier.padding(10.dp),
             properties = SwipeableCardsProperties(
-                swipeThreshold = swipeThreshold
+                swipeThreshold = 80.dp
             ),
             state = state,
             onSwipe = {item, direction ->
@@ -87,10 +87,9 @@ fun FlashCardTest(
             backsideText = item.back,
             backIsVisible = backsideIsVisible,
                     onSeeBacksideClicked = {backsideIsVisible = true //item.backsideIsVisible
-                        Log.d("logOfBackside", "${flashcardSet[state.currentCardIndex].backsideIsVisible} zustand vorher")
-
-                        flashcardSet[state.currentCardIndex].backsideIsVisible = true
-                        Log.d("logOfBackside", "${flashcardSet[state.currentCardIndex].backsideIsVisible} ist der zustand von meiner var")
+//                        Log.d("logOfBackside", "${flashcardSet[state.currentCardIndex].backsideIsVisible} zustand vorher")
+//                        flashcardSet[state.currentCardIndex].backsideIsVisible = true
+//                        Log.d("logOfBackside", "${flashcardSet[state.currentCardIndex].backsideIsVisible} ist der zustand von meiner var")
                     })
 
             }
