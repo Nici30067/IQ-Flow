@@ -12,6 +12,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.ElevatedButton
@@ -151,25 +153,31 @@ fun Flashcard(modifier: Modifier = Modifier,
             border = BorderStroke(2.dp, Color.Black)
 
         ) {
-            Text(text = frontsideText,
-                textAlign = TextAlign.Center,
-                fontSize = 20.sp,
-                modifier = Modifier.padding(20.dp))
-            HorizontalDivider(modifier = Modifier.fillMaxWidth(0.9f)
-                .align(Alignment.CenterHorizontally)
-                , thickness = 2.dp, color = Color.DarkGray)
-            Text(text = backsideText,
-                textAlign = TextAlign.Center,
-                fontSize = 20.sp,
-                modifier = Modifier
-                    .padding(20.dp)
-                    .alpha(
-                        if (backIsVisible) {
-                            1f
-                        } else {
-                            0f
-                        }
-                    ))
+            Column (
+                modifier = Modifier.verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Text(text = frontsideText,
+                    textAlign = TextAlign.Center,
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(20.dp))
+                HorizontalDivider(modifier = Modifier.fillMaxWidth(0.9f)
+                    .align(Alignment.CenterHorizontally)
+                    , thickness = 2.dp, color = Color.DarkGray)
+                Text(text = backsideText,
+                    textAlign = TextAlign.Center,
+                    fontSize = 20.sp,
+                    modifier = Modifier
+                        .padding(20.dp)
+                        .alpha(
+                            if (backIsVisible) {
+                                1f
+                            } else {
+                                0f
+                            }
+                        ))
+            }
         }
 }
 
