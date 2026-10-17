@@ -54,6 +54,8 @@ dependencies {
     implementation("androidx.room:room-runtime:2.8.5")
     ksp("androidx.room:room-compiler:2.8.5")
     testImplementation(libs.junit)
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
+
 
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
