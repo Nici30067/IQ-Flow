@@ -5,5 +5,6 @@ import com.example.iq_flow_one_zero.data.tlgi_flashcards
 
 data class DisplayUiState (
     val isBacksideShown: Boolean = false,
-    val flashcardList: List<Flashcard> = listOf()
+    val flashcardList: List<Flashcard> = listOf(),
+    val isDarkMode: Boolean = false
 )

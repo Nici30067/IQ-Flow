@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 
+
 class UserPreferencesRepository(private val dataStore: DataStore<Preferences>) {
     val isDarkMode: Flow<Boolean> = dataStore.data.catch {
         if(it is IOException){
@@ -25,6 +26,7 @@ class UserPreferencesRepository(private val dataStore: DataStore<Preferences>) {
     suspend fun saveDesignMode(isDarkMode: Boolean){
         dataStore.edit {preferences ->
             preferences[IS_DARK_MODE] = isDarkMode
+            println("In userPrefRepo this is viewed: $isDarkMode")
         }
     }
 }

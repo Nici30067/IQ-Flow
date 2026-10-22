@@ -1,5 +1,6 @@
 package com.example.iq_flow_one_zero.ui
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -13,6 +14,7 @@ import com.example.iq_flow_one_zero.R
 import com.example.iq_flow_one_zero.data.Flashcard
 import com.example.iq_flow_one_zero.data.FlashcardRepository
 import com.example.iq_flow_one_zero.data.FlashcardSet
+import com.example.iq_flow_one_zero.data.UserPreferencesRepository
 import com.example.iq_flow_one_zero.data.tlgi_flashcards
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,18 +25,26 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
-class DisplayViewModel(private val flashcardRepository: FlashcardRepository): ViewModel() {
+class DisplayViewModel(private val flashcardRepository: FlashcardRepository,
+    private val userPreferencesRepository: UserPreferencesRepository): ViewModel() {
     private val _uiState = MutableStateFlow(DisplayUiState())
-    val uiState: StateFlow<DisplayUiState> = _uiState.asStateFlow()
-
-    val homeUiState: StateFlow<DisplayUiState> = flashcardRepository.getAllFlashcards().map { DisplayUiState(flashcardList = it) }.stateIn(
+    val uiState: StateFlow<DisplayUiState> = userPreferencesRepository.isDarkMode.map { isDarkMode ->
+        DisplayUiState(isDarkMode = isDarkMode)
+    }.stateIn(
         scope = viewModelScope,
-        started = SharingStarted.WhileSubscribed(TIMEOUT_MILLIS),
+        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = 5_000),
         initialValue = DisplayUiState()
     )
 
-    var isAddDeckDialogShown by  mutableStateOf(false)
+    val homeUiState: StateFlow<DisplayUiState> = flashcardRepository.getAllFlashcards().map { DisplayUiState(flashcardList = it) }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(stopTimeoutMillis = TIMEOUT_MILLIS),
+        initialValue = DisplayUiState()
+    )
+
+    var isAddDeckDialogShown by  mutableStateOf(value = false)
         private set
     fun onAddDecksClicked(){
         isAddDeckDialogShown = true
@@ -48,7 +58,7 @@ class DisplayViewModel(private val flashcardRepository: FlashcardRepository): Vi
         flashcardRepository.insertFlashcard(Flashcard(front = front, back = back) )
     }
     fun getFullFlashcardSet(): Flow<List<FlashcardSet>> = flowOf(
-        listOf(
+        value = listOf(
             //sample data: Need to be replaced
             FlashcardSet(flashcardListName = R.string.tlgi_flashcardlist_name, flashcardList = tlgi_flashcards)
         )
@@ -60,6 +70,11 @@ class DisplayViewModel(private val flashcardRepository: FlashcardRepository): Vi
 //            pickRandomFlashcard()
         }else{
             showBackside()
+        }
+    }
+    fun selectDesign(isDarkDesign: Boolean){
+        viewModelScope.launch {
+            userPreferencesRepository.saveDesignMode(isDarkMode = isDarkDesign)
         }
     }
 
@@ -98,7 +113,8 @@ class DisplayViewModel(private val flashcardRepository: FlashcardRepository): Vi
         val factory : ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val application = (this[ViewModelProvider.AndroidViewModelFactory.APPLICATION_KEY] as FlashcardApplication)
-                DisplayViewModel(application.container.flashcardRepository)
+                DisplayViewModel(application.container.flashcardRepository,
+                    application.userPreferencesRepository)
                 //DisplayViewModel(flashcardApplication().container.flashcardRepository)       wollte das turtorial
             }
         }

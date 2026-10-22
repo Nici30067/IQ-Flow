@@ -59,7 +59,9 @@ fun NavigationHost(
 
                     Destination.Library -> LibraryScreen(contentPadding = contentPadding)
                     Destination.Statistics -> StatisticsScreen(contentPadding = contentPadding)
-                    Destination.Personal -> PersonalScreen(contentPadding = contentPadding)
+                    Destination.Personal -> PersonalScreen(contentPadding = contentPadding,
+                        selectDesign = displayViewModel::selectDesign,
+                        uiState = displayUiState)
                 }
             }
         }
