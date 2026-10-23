@@ -16,9 +16,12 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Preview
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -74,7 +77,12 @@ fun FlashcardListScreen(
                 modifier = Modifier
                     .height(500.dp)
                     .fillMaxWidth()
-                    .padding(20.dp)
+                    .padding(20.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer
+                )
+
+                        //TODO("farben sind nicht richtig hier")
             ) {
                 LazyColumn(
                     verticalArrangement = Arrangement.Top,
@@ -88,6 +96,12 @@ fun FlashcardListScreen(
                             textOnButton = stringResource(flashcardSet.flashcardListName)
                         )
                         Button(
+                            colors = ButtonColors(
+                                containerColor = MaterialTheme.colorScheme.primaryContainer,
+                                contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
+                                disabledContentColor = MaterialTheme.colorScheme.onError,
+                                disabledContainerColor = MaterialTheme.colorScheme.onError
+                            ),
                             onClick = onAddFlashcardSetClicked,
                             modifier = Modifier
                                 .fillMaxWidth()
