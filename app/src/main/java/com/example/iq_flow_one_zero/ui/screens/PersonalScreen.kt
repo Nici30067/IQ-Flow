@@ -41,6 +41,7 @@ fun PersonalScreen(modifier: Modifier = Modifier,
                     modifier = Modifier.padding(12.dp))
 
                 Switch(
+                    //this is just a comment
                     checked = isDarkMode,
                     onCheckedChange = {selectDesign(!isDarkMode)
                     },
