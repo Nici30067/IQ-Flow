@@ -1,5 +1,6 @@
 package com.example.iq_flow_one_zero.ui.screens
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -107,7 +108,13 @@ fun FlashcardListScreen(
 
 
 
-@Preview
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO,
+    name = "light mode",
+    showBackground = true)
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES,
+    name = "dark mode",
+    showBackground = true)
+
 @Composable
 fun FlashcardListPreview(){
     FlashcardListScreen(

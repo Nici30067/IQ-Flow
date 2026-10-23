@@ -1,6 +1,7 @@
 package com.example.iq_flow_one_zero.ui.screens
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
@@ -36,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.iq_flow_one_zero.R
 import com.example.iq_flow_one_zero.data.Flashcard
 import com.example.iq_flow_one_zero.data.tlgi_flashcards
@@ -181,11 +183,17 @@ fun Flashcard(modifier: Modifier = Modifier,
         }
 }
 
-//@Preview(showBackground = true)
-//@Composable
-//fun FlashCardScreenPreview(){
-//    FlashCardTest(
-//        onBackButtonClicked = {},
-//        flashcardSet = tlgi_flashcards,
-//    )
-//}
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO,
+    showBackground = true,
+    name = "light mode")
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_YES,
+    showBackground = true,
+    name = "dark mode")
+@Composable
+fun FlashCardScreenPreview(){
+    FlashCardTest(
+        onBackButtonClicked = {},
+        flashcardSet = tlgi_flashcards,
+        navController = rememberNavController()
+    )
+}
