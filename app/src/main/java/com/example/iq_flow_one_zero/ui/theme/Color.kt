@@ -3,7 +3,7 @@ package com.example.iq_flow_one_zero.ui.theme
 import androidx.compose.ui.graphics.Color
 
 
-val primaryLight = Color(0xFF565992)
+val primaryLight = Color(0xFF040D90)
 val onPrimaryLight = Color(0xFFFFFFFF)
 val primaryContainerLight = Color(0xFFE1E0FF)
 val onPrimaryContainerLight = Color(0xFF3F4178)

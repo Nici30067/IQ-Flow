@@ -2,6 +2,8 @@ package com.example.iq_flow_one_zero.ui.screens
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -20,6 +22,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.FloatingActionButton
@@ -38,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.iq_flow_one_zero.data.Flashcard
 import com.example.iq_flow_one_zero.data.tlgi_flashcards
+import javax.sql.DataSource
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -140,12 +144,24 @@ fun InformationAndStartLearningBox(
 }
 
 @Composable
-fun FlashcardBulkDetailView(flashcard: Flashcard) {
+fun FlashcardBulkDetailView(flashcard: Flashcard = Flashcard(
+    front = "This will be visible on the front page",
+    back = "This will be visible on the back page"
+)) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp)
     ) {
+        Row(horizontalArrangement = Arrangement.End,
+            modifier = Modifier.fillMaxWidth(0.95f)
+                .padding(top = 8.dp)) {
+            Icon(imageVector = Icons.Default.Delete,
+                contentDescription = "",
+                modifier = Modifier.clickable(
+                    onClick = {}
+                ))
+        }
         Text(text = flashcard.front, modifier = Modifier.padding(12.dp))
         HorizontalDivider()
         Text(
@@ -164,4 +180,9 @@ fun DeckDetailsScreenPreview() {
         flashcardSetName = "",
         onAddNewCardsClicked = {}
     )
+}
+@Preview
+@Composable
+fun FlashcardBulkDetailViewPreview(){
+    FlashcardBulkDetailView()
 }

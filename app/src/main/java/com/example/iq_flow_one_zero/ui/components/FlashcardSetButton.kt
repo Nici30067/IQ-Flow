@@ -20,8 +20,8 @@ fun FlashcardSetButton(
 ) {
     Button(
         colors = ButtonColors(
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer,
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
+            contentColor = MaterialTheme.colorScheme.onPrimary,
+            containerColor = MaterialTheme.colorScheme.primary,
             disabledContentColor = MaterialTheme.colorScheme.error,
             disabledContainerColor = MaterialTheme.colorScheme.error
         ),
@@ -30,7 +30,7 @@ fun FlashcardSetButton(
             .fillMaxWidth()
             .padding(12.dp)
     ) {
-        Text(color = MaterialTheme.colorScheme.onPrimaryContainer,
+        Text(color = MaterialTheme.colorScheme.onPrimary,
             text = textOnButton,
             modifier = Modifier.padding(12.dp)
         )
