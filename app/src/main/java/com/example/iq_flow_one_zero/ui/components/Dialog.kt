@@ -1,5 +1,6 @@
 package com.example.iq_flow_one_zero.ui.components
 
+import android.content.res.Configuration
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -122,7 +123,11 @@ fun SpecialTextField(textFieldInput: String,
                     }
                 },*/
 
-@Preview(showBackground = false)
+@Preview(showBackground = false,
+    uiMode = Configuration.UI_MODE_NIGHT_YES,
+    name = "Dark Mode")
+@Preview(uiMode = Configuration.UI_MODE_NIGHT_NO,
+    name = "Light Mode")
 @Composable
 fun DialogPreview(modifier: Modifier = Modifier){
     DialogContent(
