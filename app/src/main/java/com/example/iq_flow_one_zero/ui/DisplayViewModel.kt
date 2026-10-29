@@ -57,6 +57,9 @@ class DisplayViewModel(private val flashcardRepository: FlashcardRepository,
 
         flashcardRepository.insertFlashcard(Flashcard(front = front, back = back) )
     }
+    suspend fun deleteFlashcard(flashcard: Flashcard){
+        flashcardRepository.deleteFlashcard(flashcard)
+    }
     fun getFullFlashcardSet(): Flow<List<FlashcardSet>> = flowOf(
         value = listOf(
             //sample data: Need to be replaced

@@ -1,5 +1,12 @@
 package com.example.iq_flow_one_zero.navigation
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -37,14 +44,22 @@ fun NavigationHost(
 
 
     NavHost(
-        navController,
+        enterTransition = { slideInHorizontally(initialOffsetX = { it }
+//            ,animationSpec = tween(10000)
+        ) },
+        exitTransition = { slideOutHorizontally(targetOffsetX = {0}) },
+        popEnterTransition = {slideInHorizontally(initialOffsetX = { -it })},
+        popExitTransition = { slideOutHorizontally(targetOffsetX = {it}) },
+        predictivePopEnterTransition = {slideInHorizontally(initialOffsetX = { -it })},
+        predictivePopExitTransition = {slideOutHorizontally(targetOffsetX = {it})},
+        navController = navController,
         startDestination = startDestination.name
     ) {
         Destination.entries.forEach { destination ->
             composable(
-                destination.name
-//                enterTransition = { EnterTransition.None},
-//                exitTransition = { ExitTransition.None}
+                route = destination.name,
+                enterTransition = { EnterTransition.None},
+                exitTransition = { ExitTransition.None}
             ) {
                 when (destination) {
                     Destination.List -> FlashcardListScreen(
@@ -78,6 +93,11 @@ fun NavigationHost(
                 },
                 onAddNewCardsClicked = {navController.navigate(DetailScreens.ADD_CARDS.name)},
                 flashcardsList = flashcardList,
+                onDeleteCardClicked = {flashcard ->
+                    coroutineScope.launch {
+                        displayViewModel.deleteFlashcard(flashcard)
+                    }
+                },
                 contentPadding = contentPadding
 
             )
