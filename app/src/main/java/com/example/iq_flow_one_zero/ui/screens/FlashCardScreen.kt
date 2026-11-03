@@ -59,7 +59,8 @@ fun FlashCardTest(
     navController: NavHostController,
 ){
 //    val context = LocalContext.current        for vibrations
-    val state = rememberSwipeableCardsState(itemCount = { flashcardSet.size })
+    val state = rememberSwipeableCardsState(initialCardIndex = 0,
+        itemCount = { flashcardSet.size })
 //    val swipeThreshold = if(flashcardSet[state.currentCardIndex].backsideIsVisible){
 //            80.dp
 //        }else {
@@ -77,14 +78,10 @@ fun FlashCardTest(
                 swipeThreshold = 80.dp
             ),
             state = state,
-            onSwipe = {item, direction ->
-                if(item.id == flashcardSet.size){
+            onSwipe = {index, direction ->
+                if(state.currentCardIndex == flashcardSet.size){
                     navController.navigateUp()
                 }
-//                if(!flashcardSet[state.currentCardIndex].backsideIsVisible){
-//                    state.goBack()
-//                }
-
             }
         ) {
             items(flashcardSet){item, index, offset ->
