@@ -8,7 +8,7 @@ object SwipeableCardsDefaults {
     const val LOCK_BELOW_CARD_DRAGGING = true
     const val ENABLE_ROTATION = true
     const val ENABLE_HAPTIC_FEEDBACK_ON_THRESHOLD = true
-    const val DRAGGING_ACCELERATION = 1f
+    const val DRAGGING_ACCELERATION = 1.2f
     val STACKED_CARDS_OFFSET = 40.dp
     val SWIPE_THRESHOLD = 100.dp
     val PADDING = 10.dp
