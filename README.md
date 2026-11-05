@@ -26,3 +26,10 @@ This is an open source Project by developers for developers to visualize futuris
 -Lernalgorythmus: Spaced Learning  
 -Karteikarten in mehreren Schritten ausgeben
 -Zieldatum eingeben (= Klausurdatum)-> Empfehlung von Gelernten Karten/Tag
+
+## Possible Future Inspiration
+-https://github.com/kirill-markin/flashcards-open-source-app/commits?author=tacman
+-https://github.com/AdamDawi/FlashcardCompose
+-https://github.com/jvsena42/loopky
+-https://github.com/android/nowinandroid/blob/main/app/src/main/kotlin/com/google/samples/apps/nowinandroid/ui/NiaApp.kt
+-https://github.com/smartword-app/compose-swipeable-cards/blob/main/example/src/main/java/com/spartapps/swipeable/demo/cards_screen/CardsScreen.kt
